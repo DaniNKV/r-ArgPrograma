@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 4
+    </title>
+</head>
+<body>
+    <div class="listado">
+        <form id="agregarNumeros">
+            <label>Ingrese un numero</label>
+            <input type="number" id="numero">
+            <button id="botonAgregar">Agregar Numero</button>
+        </form>
+        <ul id="lista"></ul>
+        
+        <button id="botonCalcular">Calcular</button>
+    </div>
+    
+    <div class="resultados">
+
+        <p>El promedio es:<em id="promedio"></em></p>
+        <p>El número más grande es:<em id="masGrande"></em></p>
+        <p>El número más chico es:<em id="masPequeño"></em></p>
+        <p>El número que más se repite es: <em id="masFrecuente"></em></p>
+    </div>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
+
+
+<style>
+    em {
+        margin-left: 5px;
+        font-weight: bold;
+        font-size: 20px
+    }
+</style>

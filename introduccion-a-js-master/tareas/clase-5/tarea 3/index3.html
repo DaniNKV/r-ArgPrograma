@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tarea 3</title>
+</head>
+<body>
+
+<h1>Calculadora de Duración total</h1>
+
+<form>
+    <h2>Ingrese la duración del video</h2>
+    <label for="hours">Horas</label>
+    <input 
+        type = "number"
+        id = "horas">
+        
+    <label for="minutes">Minutos</label>
+    <input
+        id = "minutos" 
+        type = "number">
+    <label for="seconds">Segundos</label>
+    <input 
+        id = "segundos"
+        type = "number">
+        
+    <button 
+        type="submit"
+        id = "calcular">Submit</button>
+
+    <strong id="duracion-total" class="strong"></strong>
+</form>
+
+
+    
+</body>
+
+<script src="scripts.js"></script>
+</html>
+
+
+
+
+
+
+
+
+
+<style>
+    h1,h2 {
+        text-align: center;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding: 10px;
+        width: 480px;
+    }
+    label {
+        padding: 5px;;
+    }
+    button {
+        margin-top: 10px;
+    }
+    .strong {
+        padding-top: 20px;
+        font-size: 20px
+    }
+</style>

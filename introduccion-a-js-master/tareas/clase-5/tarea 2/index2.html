@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 2 Clase 5</title>
+</head>
+<style>
+    h1 {
+        text-align: center;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 480px;
+        margin: 0 auto 0 auto;  
+    }
+    label {
+        padding: 0.5rem 0
+    }
+    .button {
+        margin: 10px 0;
+        padding: 20px;
+    }
+</style>
+<body>
+
+    <form id="form">
+        <h1 id="title"></h1>
+        <label for="firstName">Primer Nombre</label>
+        <input 
+            class="input"
+            type="text"
+            id="primer-nombre">
+            
+        <label for="secondName">Segundo Nombre</label>
+        <input 
+            class="input"    
+            type="text"
+            id="segundo-nombre">
+        <label for="LastName">Apellido</label>
+        <input 
+            class="input"
+            type="text"
+            id="apellido">
+        <label for="Age">Edad</label>
+        <input 
+            class="input"
+            type="age" 
+            from="0" to="99">
+        
+        <input class="button" type="submit" id="enviar">
+        
+    </form>
+    
+    
+</body>
+
+<script src="scripts.js"></script>
+</html>
