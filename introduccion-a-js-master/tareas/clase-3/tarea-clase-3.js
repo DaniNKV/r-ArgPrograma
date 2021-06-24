@@ -87,4 +87,4 @@ if (documento = "Si") {
         alert ("No te entiendo")
     }
 else
-    alert ("Sin documento no pasas")
+    alert ("Sin documento no pasas") */
