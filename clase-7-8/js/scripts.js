@@ -55,13 +55,16 @@ function manejarErrores(errores) {
       $form[key].className = "";
     }
     else if (error && existeElemento) {
+      cantidadErrores++
       $form[key].className = "error" ;
     }  
     else {
       $form[key].className = "";
     }
+    return cantidadErrores;
   })
-return cantidadErrores;
+  return cantidadErrores;
+
 }
 
 
