@@ -86,15 +86,27 @@ function crearIntegrante (indice) {
     labelTrabajo.appendChild(inputTrabajo);
     inputTrabajo.appendChild(spanTrabajo);
 
-    inputTrabajo.onclick = crearSalario;
+    inputTrabajo.onchange = crearSalario = (e) => {
+        if (inputTrabajo.checked == true ) {
+            const inputSueldo = document.createElement('input');
+            inputSueldo.type = 'number';
+            inputSueldo.placeholder = "Ingrese su sueldo anual"
+            inputSueldo.id = "salario-anual"
+            console.log("hola")
+            div.appendChild(inputSueldo);
+        }else {
+            document.querySelector('#salario-anual').remove()
+        }
+        
+
+    };
+
 
 
 }
 
 
-function crearSalario() {
-    console.log("hola")
-}
+
 
 
 document.querySelector('#boton-calcular').onclick = function (event) {
