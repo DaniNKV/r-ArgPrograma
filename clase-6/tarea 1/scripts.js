@@ -16,6 +16,7 @@ $siguientePaso.onclick = function (event) {
     event.preventDefault();
 };
 
+
 function crearIntegrantes (cantidadIntegrantes) {
     if (cantidadIntegrantes > 0) {
         mostrarBotonCalculo();
@@ -26,8 +27,10 @@ function crearIntegrantes (cantidadIntegrantes) {
 
     for(let i=0 ; i<cantidadIntegrantes; i++) {
         crearIntegrante(i);
+
     }
 }
+
 
 function borrarIntegrantesAnteriores() {
     const $integrantes = document.querySelectorAll('#integrantes .integrante')
@@ -47,7 +50,10 @@ function resetear() {
     ocultarResultado();
 }
 
+
+
 function crearIntegrante (indice) {
+    // Crea elemento por cada integrante ingresado
     const div = document.createElement('div');
     div.className = "integrante";
 
@@ -56,18 +62,39 @@ function crearIntegrante (indice) {
 
     const input = document.createElement('input');
     input.type = "number";
+    input.className = "input"
 
     const $integrantes = document.querySelector('#integrantes');
     $integrantes.appendChild(div)
     div.appendChild(label);
     div.appendChild(input);
-  
 
+    // Crea la pregunta del trabajo de cada integrante
+    const labelTrabajo = document.createElement('label');
+    labelTrabajo.className = 'switch';
+    labelTrabajo.innerHTML = "Trabaja?"
+
+    const inputTrabajo = document.createElement('input');
+    inputTrabajo.type = 'checkbox';
+    inputTrabajo.className = 'input-trabajo';
+    inputTrabajo.id = "trabajo-check";
+
+    const spanTrabajo = document.createElement('span');
+    spanTrabajo.className = 'slider-round';
+
+    div.appendChild(labelTrabajo);
+    labelTrabajo.appendChild(inputTrabajo);
+    inputTrabajo.appendChild(spanTrabajo);
+
+    inputTrabajo.onclick = crearSalario;
 
 
 }
 
 
+function crearSalario() {
+    console.log("hola")
+}
 
 
 document.querySelector('#boton-calcular').onclick = function (event) {
@@ -83,7 +110,7 @@ document.querySelector('#boton-calcular').onclick = function (event) {
 };
 
 function obtenerEdadesIntegrantes() {
-    const $integrantes = document.querySelectorAll('.integrante input');
+    const $integrantes = document.querySelectorAll('.integrante input.input');
     const edades = [] ;
     for(i=0 ; i < $integrantes.length ; i++) {
         edades.push(Number($integrantes[i].value));
@@ -95,6 +122,7 @@ function mostrarEdad(tipo, valor) {
     //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
     document.querySelector(`#${tipo}-edad`).textContent = valor
 }
+
 
 function mostrarBotonCalculo () {
     document.querySelector('#boton-calcular').className = ''; 
