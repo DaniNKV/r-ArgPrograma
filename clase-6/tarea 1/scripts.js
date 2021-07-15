@@ -5,11 +5,17 @@ Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad
 
 Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN).
 */
+let DOM = {
+    siguientePasoBtn: document.querySelector('#siguiente-paso'),
+    cantidadFamiliares: document.querySelector('#cantidadFamiliares'),
+    integrantesDiv: document.querySelector('#integrantes'),
+    integrante: [],
+    preguntaTrabajo: [],
+}
 
-const $siguientePaso = document.querySelector('#siguiente-paso');
-$siguientePaso.onclick = function (event) {
-    $cantidadIntegrantes = document.querySelector('#cantidadFamiliares');
-    const cantidadIntegrantes = Number($cantidadIntegrantes.value);
+
+DOM.siguientePasoBtn.onclick = function (event) {
+    const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
     
     crearIntegrantes(cantidadIntegrantes);
     
@@ -54,60 +60,77 @@ function resetear() {
 
 function crearIntegrante (indice) {
     // Crea elemento por cada integrante ingresado
-    const div = document.createElement('div');
-    div.className = "integrante";
+    creaInputEdad(indice);
 
+    // Crea la pregunta del trabajo de cada integrante
+    creaPreguntaTrabajo(indice);
+    
+    // Si el integrante trabaja, crea un Input para el Salario
+    DOM.preguntaTrabajo.forEach((pregunta, indice) => {
+        pregunta.onchange = crearSalario = (e) => {
+            const integranteTrabaja = e.target.checked;
+            if ( integranteTrabaja == true ) {
+                creaInputSueldo(indice);
+            }else {
+                eliminaInputSueldo(indice);
+            }
+        }
+    })
+}
+
+function creaInputEdad (indice) {
+    const div = document.createElement('div');
     const label = document.createElement('label');
+    const input = document.createElement('input');
+
+    div.className = "integrante integrante" + (indice + 1);
+
     label.textContent = "Edad del integrante: #" + (indice + 1);
 
-    const input = document.createElement('input');
     input.type = "number";
     input.className = "input"
-
-    const $integrantes = document.querySelector('#integrantes');
-    $integrantes.appendChild(div)
+    
+    DOM.integrantesDiv.appendChild(div)
     div.appendChild(label);
     div.appendChild(input);
 
-    // Crea la pregunta del trabajo de cada integrante
-    const labelTrabajo = document.createElement('label');
-    labelTrabajo.className = 'switch';
-    labelTrabajo.innerHTML = "Trabaja?"
-
-    const inputTrabajo = document.createElement('input');
-    inputTrabajo.type = 'checkbox';
-    inputTrabajo.className = 'input-trabajo';
-    inputTrabajo.id = "trabajo-check";
-
-    const spanTrabajo = document.createElement('span');
-    spanTrabajo.className = 'slider-round';
-
-    div.appendChild(labelTrabajo);
-    labelTrabajo.appendChild(inputTrabajo);
-    inputTrabajo.appendChild(spanTrabajo);
-
-    inputTrabajo.onchange = crearSalario = (e) => {
-        if (inputTrabajo.checked == true ) {
-            const inputSueldo = document.createElement('input');
-            inputSueldo.type = 'number';
-            inputSueldo.placeholder = "Ingrese su sueldo anual"
-            inputSueldo.id = "salario-anual"
-            console.log("hola")
-            div.appendChild(inputSueldo);
-        }else {
-            document.querySelector('#salario-anual').remove()
-        }
-        
-
-    };
+    DOM.integrante.push(div)
 
 
 
 }
 
+function creaPreguntaTrabajo(indice) {
+    const labelTrabajo = document.createElement('label');
+    const preguntaTrabajo = document.createElement('input');
+    const spanTrabajo = document.createElement('span');
+    DOM.preguntaTrabajo.push(preguntaTrabajo);
 
+    labelTrabajo.className = 'switch';
+    labelTrabajo.innerHTML = "Trabaja?"
 
+    preguntaTrabajo.type = 'checkbox';
+    preguntaTrabajo.className = 'input-trabajo';
 
+    spanTrabajo.className = 'slider-round';
+
+    DOM.integrante[indice].appendChild(labelTrabajo);
+    labelTrabajo.appendChild(preguntaTrabajo);
+    preguntaTrabajo.appendChild(spanTrabajo);
+}
+function creaInputSueldo (indice) {
+    const inputSueldo = document.createElement('input');
+    
+    inputSueldo.type = 'number';
+    inputSueldo.placeholder = "Ingrese su sueldo anual"
+    inputSueldo.className = "salario salario" + (indice + 1);
+    
+    DOM.integrante[indice].appendChild(inputSueldo);
+}
+function eliminaInputSueldo (indice) {
+    document.querySelector('.salario.salario' + (indice + 1)).remove()
+    
+}
 
 document.querySelector('#boton-calcular').onclick = function (event) {
     const numeros = obtenerEdadesIntegrantes();
