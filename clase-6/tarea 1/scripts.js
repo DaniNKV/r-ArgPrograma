@@ -18,7 +18,7 @@ DOM.siguientePasoBtn.onclick = function (event) {
     const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
     
     crearIntegrantes(cantidadIntegrantes);
-    
+    ocultarBotonSiguientePaso();
     event.preventDefault();
 };
 
@@ -33,7 +33,6 @@ function crearIntegrantes (cantidadIntegrantes) {
 
     for(let i=0 ; i<cantidadIntegrantes; i++) {
         crearIntegrante(i);
-
     }
 }
 
@@ -57,6 +56,7 @@ function resetear() {
     borrarIntegrantesAnteriores();
     ocultarBotonCalculo();
     ocultarResultado();
+    mostrarBotonSiguientePaso();
 }
 
 function crearIntegrante (indice) {
@@ -159,6 +159,17 @@ function mostrarEdad(tipo, valor) {
     document.querySelector(`#${tipo}-edad`).textContent = valor
 }
 
+function ocultarBotonSiguientePaso () {
+    if (DOM.cantidadFamiliares.value > 0) {
+        DOM.siguientePasoBtn.className = 'oculto';
+    }else {
+        mostrarBotonSiguientePaso();
+    }
+}
+
+function mostrarBotonSiguientePaso () {
+    DOM.siguientePasoBtn.className = '';
+}
 
 function mostrarBotonCalculo () {
     document.querySelector('#boton-calcular').className = ''; 
