@@ -6,12 +6,18 @@ Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad
 Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN).
 */
 let DOM = {
+    //Botones
     siguientePasoBtn: document.querySelector('#siguiente-paso'),
-    cantidadFamiliares: document.querySelector('#cantidadFamiliares'),
+    calcularBtn: document.querySelector('#boton-calcular'),
+    resetearBtn: document.querySelector('#resetear'),
+    
+    //Datos app
+    cantidadFamiliares: document.querySelector('#cantidad-familiares'),
     integrantesDiv: document.querySelector('#integrantes'),
     integrante: [], //Todos los integrantes se pushean aca//
     preguntaTrabajo: [], //Los switches de trabajo se pushean aca//
-    calcularBtn: document.querySelector('#boton-calcular'),
+    
+    //Analisis de los datos
     analisisEdad: document.querySelector('#analisis-edad'),
     analisisSalario: document.querySelector('#analisis-salario')
 }
@@ -51,7 +57,7 @@ function borrarIntegrantesAnteriores() {
 
 }
 
-document.querySelector('#resetear').onclick = function(){
+DOM.resetearBtn.onclick = function(){
     resetear()
 }
 
@@ -136,11 +142,18 @@ function eliminaInputSueldo (indice) {
     
 }
 
-document.querySelector('#boton-calcular').onclick = function (event) {
+DOM.calcularBtn.onclick = function (event) {
     const numeros = obtenerEdadesIntegrantes();
+    const salarios = obtenerSalariosIntegrantes();
+
     mostrarEdad('promedio', calcularPromedio(numeros));
     mostrarEdad('menor', calcularMenor(numeros));
     mostrarEdad('mayor', calcularMayor(numeros));
+    
+    mostrarSalario('promedio', calcularPromedio(salarios));
+    mostrarSalario('menor', calcularMenor(salarios));
+    mostrarSalario('mayor', calcularMayor(salarios));
+    
     mostrarResultados();
     
     event.preventDefault();
@@ -156,11 +169,26 @@ function obtenerEdadesIntegrantes() {
     }
     return edades;
 }
+function obtenerSalariosIntegrantes() {
+    const $salarios = document.querySelectorAll('.integrante .salario');
+    const salarios = [] ;
+    console.log($salarios)
+    for(i=0 ; i < $salarios.length ; i++) {
+        salarios.push(Number($salarios[i].value));
+    }
+    return salarios;
+
+}
 
 function mostrarEdad(tipo, valor) {
     //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
     document.querySelector(`#${tipo}-edad`).textContent = valor
 }
+function mostrarSalario(tipo, valor) {
+    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
+    document.querySelector(`#${tipo}-salario`).textContent = valor
+}
+
 
 function ocultarBotonSiguientePaso () {
     if (DOM.cantidadFamiliares.value > 0) {
@@ -172,6 +200,8 @@ function ocultarBotonSiguientePaso () {
 
 function mostrarBotonSiguientePaso () {
     DOM.siguientePasoBtn.className = '';
+    DOM.cantidadFamiliares.disabled = "";
+
 }
 
 function mostrarBotonCalculo () {
