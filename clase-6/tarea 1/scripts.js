@@ -9,8 +9,8 @@ let DOM = {
     siguientePasoBtn: document.querySelector('#siguiente-paso'),
     cantidadFamiliares: document.querySelector('#cantidadFamiliares'),
     integrantesDiv: document.querySelector('#integrantes'),
-    integrante: [],
-    preguntaTrabajo: [],
+    integrante: [], //Todos los integrantes se pushean aca//
+    preguntaTrabajo: [], //Los switches de trabajo se pushean aca//
 }
 
 
@@ -42,8 +42,11 @@ function borrarIntegrantesAnteriores() {
     const $integrantes = document.querySelectorAll('#integrantes .integrante')
     for (i=0 ; i<$integrantes.length ; i++) {
         $integrantes[i].remove();
-    }
-    ;
+  
+    };
+    DOM.integrante = [];
+    DOM.preguntaTrabajo = [];
+
 }
 
 document.querySelector('#resetear').onclick = function(){
@@ -55,8 +58,6 @@ function resetear() {
     ocultarBotonCalculo();
     ocultarResultado();
 }
-
-
 
 function crearIntegrante (indice) {
     // Crea elemento por cada integrante ingresado
