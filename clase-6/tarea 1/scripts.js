@@ -5,16 +5,26 @@ Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad
 
 Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN).
 */
+let DOM = {
+    siguientePasoBtn: document.querySelector('#siguiente-paso'),
+    cantidadFamiliares: document.querySelector('#cantidadFamiliares'),
+    integrantesDiv: document.querySelector('#integrantes'),
+    integrante: [], //Todos los integrantes se pushean aca//
+    preguntaTrabajo: [], //Los switches de trabajo se pushean aca//
+    calcularBtn: document.querySelector('#boton-calcular'),
+    analisisEdad: document.querySelector('#analisis-edad'),
+    analisisSalario: document.querySelector('#analisis-salario')
+}
 
-const $siguientePaso = document.querySelector('#siguiente-paso');
-$siguientePaso.onclick = function (event) {
-    $cantidadIntegrantes = document.querySelector('#cantidadFamiliares');
-    const cantidadIntegrantes = Number($cantidadIntegrantes.value);
+
+DOM.siguientePasoBtn.onclick = function (event) {
+    const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
     
     crearIntegrantes(cantidadIntegrantes);
-    
+    ocultarBotonSiguientePaso();
     event.preventDefault();
 };
+
 
 function crearIntegrantes (cantidadIntegrantes) {
     if (cantidadIntegrantes > 0) {
@@ -29,12 +39,16 @@ function crearIntegrantes (cantidadIntegrantes) {
     }
 }
 
+
 function borrarIntegrantesAnteriores() {
-    const $integrantes = document.querySelectorAll('#integrantes')
+    const $integrantes = document.querySelectorAll('#integrantes .integrante')
     for (i=0 ; i<$integrantes.length ; i++) {
         $integrantes[i].remove();
+  
+    };
+    DOM.integrante = [];
+    DOM.preguntaTrabajo = [];
 
-    }
 }
 
 document.querySelector('#resetear').onclick = function(){
@@ -45,29 +59,82 @@ function resetear() {
     borrarIntegrantesAnteriores();
     ocultarBotonCalculo();
     ocultarResultado();
+    mostrarBotonSiguientePaso();
 }
 
 function crearIntegrante (indice) {
-    const $div = document.createElement('div');
-    $div.className = "integrante";
+    // Crea elemento por cada integrante ingresado
+    creaInputEdad(indice);
 
-    const $label = document.createElement('label');
-    $label.textContent = "Edad del integrante: #" + (indice + 1);
-
-    const $input = document.createElement('input');
-    $input.type = "number";
-
-    $div.appendChild($label);
-    $div.appendChild($input);
+    // Crea la pregunta del trabajo de cada integrante
+    creaPreguntaTrabajo(indice);
     
-    const $integrantes = document.querySelector('#integrantes');
-    $integrantes.appendChild($div)
+    // Si el integrante trabaja, crea un Input para el Salario
+    DOM.preguntaTrabajo.forEach((pregunta, indice) => {
+        pregunta.onchange = crearSalario = (e) => {
+            const integranteTrabaja = e.target.checked;
+            if ( integranteTrabaja == true ) {
+                creaInputSueldo(indice);
+            }else {
+                eliminaInputSueldo(indice);
+            }
+        }
+    })
+}
+
+function creaInputEdad (indice) {
+    const div = document.createElement('div');
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+
+    div.className = "integrante integrante" + (indice + 1);
+
+    label.textContent = "Edad del integrante: #" + (indice + 1);
+
+    input.type = "number";
+    input.className = "input"
+    
+    DOM.integrantesDiv.appendChild(div)
+    div.appendChild(label);
+    div.appendChild(input);
+
+    DOM.integrante.push(div)
+
 
 
 }
 
+function creaPreguntaTrabajo(indice) {
+    const labelTrabajo = document.createElement('label');
+    const preguntaTrabajo = document.createElement('input');
+    const spanTrabajo = document.createElement('span');
+    DOM.preguntaTrabajo.push(preguntaTrabajo);
 
+    labelTrabajo.className = 'switch';
+    labelTrabajo.innerHTML = "Trabaja?"
 
+    preguntaTrabajo.type = 'checkbox';
+    preguntaTrabajo.className = 'input-trabajo';
+
+    spanTrabajo.className = 'slider-round';
+
+    DOM.integrante[indice].appendChild(labelTrabajo);
+    labelTrabajo.appendChild(preguntaTrabajo);
+    preguntaTrabajo.appendChild(spanTrabajo);
+}
+function creaInputSueldo (indice) {
+    const inputSueldo = document.createElement('input');
+    
+    inputSueldo.type = 'number';
+    inputSueldo.placeholder = "Ingrese su sueldo anual"
+    inputSueldo.className = "salario salario" + (indice + 1);
+    
+    DOM.integrante[indice].appendChild(inputSueldo);
+}
+function eliminaInputSueldo (indice) {
+    document.querySelector('.salario.salario' + (indice + 1)).remove()
+    
+}
 
 document.querySelector('#boton-calcular').onclick = function (event) {
     const numeros = obtenerEdadesIntegrantes();
@@ -82,7 +149,7 @@ document.querySelector('#boton-calcular').onclick = function (event) {
 };
 
 function obtenerEdadesIntegrantes() {
-    const $integrantes = document.querySelectorAll('.integrante input');
+    const $integrantes = document.querySelectorAll('.integrante input.input');
     const edades = [] ;
     for(i=0 ; i < $integrantes.length ; i++) {
         edades.push(Number($integrantes[i].value));
@@ -95,17 +162,34 @@ function mostrarEdad(tipo, valor) {
     document.querySelector(`#${tipo}-edad`).textContent = valor
 }
 
+function ocultarBotonSiguientePaso () {
+    if (DOM.cantidadFamiliares.value > 0) {
+        DOM.siguientePasoBtn.className = 'oculto';
+    }else {
+        mostrarBotonSiguientePaso();
+    }
+}
+
+function mostrarBotonSiguientePaso () {
+    DOM.siguientePasoBtn.className = '';
+}
+
 function mostrarBotonCalculo () {
-    document.querySelector('#boton-calcular').className = ''; 
+    DOM.calcularBtn.className = ''; 
 }
+
 function ocultarBotonCalculo(){
-    document.querySelector('#boton-calcular').className = 'oculto';
+    DOM.calcularBtn.className = 'oculto';
 }
+
 function mostrarResultados(){
-    document.querySelector('#analisis').className = '';
+    DOM.analisisEdad.className = '';
+    DOM.analisisSalario.className = '';
+
 }
-function ocultarResultados() {
-    document.querySelector('#analisis').className = 'oculto';
+function ocultarResultado() {
+    DOM.analisisEdad.className = 'oculto';
+    DOM.analisisSalario.className = 'oculto';
 }
 /*
 TAREA:

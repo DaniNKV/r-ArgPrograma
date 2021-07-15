@@ -36,7 +36,7 @@ function manejarErrores(errores) {
   const $errores = document.querySelector('#errores') 
   let cantidadErrores = 0
 
-  keys.forEach(function(key){
+  keys.forEach(key => {
     const error = errores[key];
     const existeElemento = document.querySelector('.error__'+[key]) !==null ;
     
@@ -49,9 +49,8 @@ function manejarErrores(errores) {
       $errores.appendChild($error);
     }
     else if (!error && existeElemento) {
-      cantidadErrores--;
-      const borrarElemento = document.querySelector('.error__'+[key]);
-      $errores.removeChild(borrarElemento);
+      const elementoParaBorrar = document.querySelector('.error__'+[key]);
+      $errores.removeChild(elementoParaBorrar);
       $form[key].className = "";
     }
     else if (error && existeElemento) {
@@ -61,7 +60,7 @@ function manejarErrores(errores) {
     else {
       $form[key].className = "";
     }
-    return cantidadErrores;
+
   })
   return cantidadErrores;
 
