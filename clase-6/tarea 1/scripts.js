@@ -11,6 +11,9 @@ let DOM = {
     integrantesDiv: document.querySelector('#integrantes'),
     integrante: [], //Todos los integrantes se pushean aca//
     preguntaTrabajo: [], //Los switches de trabajo se pushean aca//
+    calcularBtn: document.querySelector('#boton-calcular'),
+    analisisEdad: document.querySelector('#analisis-edad'),
+    analisisSalario: document.querySelector('#analisis-salario')
 }
 
 
@@ -172,16 +175,21 @@ function mostrarBotonSiguientePaso () {
 }
 
 function mostrarBotonCalculo () {
-    document.querySelector('#boton-calcular').className = ''; 
+    DOM.calcularBtn.className = ''; 
 }
+
 function ocultarBotonCalculo(){
-    document.querySelector('#boton-calcular').className = 'oculto';
+    DOM.calcularBtn.className = 'oculto';
 }
+
 function mostrarResultados(){
-    document.querySelector('#analisis').className = '';
+    DOM.analisisEdad.className = '';
+    DOM.analisisSalario.className = '';
+
 }
 function ocultarResultado() {
-    document.querySelector('#analisis').className = 'oculto';
+    DOM.analisisEdad.className = 'oculto';
+    DOM.analisisSalario.className = 'oculto';
 }
 /*
 TAREA:
