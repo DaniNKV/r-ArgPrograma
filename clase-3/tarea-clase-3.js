@@ -8,25 +8,25 @@
 // Si no, simplemente imprimir "Hola " + nombre!
 
 //Resolucion 1:
-/*
-const = MI_NOMBRE = ""
-const = NOMBRE_USUARIO = prompt ("Escriba su nombre" || "" ).toLowerCase() ;
+
+const MI_NOMBRE = ""
+const NOMBRE_USUARIO = prompt ("Escriba su nombre" || "" ).toLowerCase() ;
 
 
 if (MI_NOMBRE == NOMBRE_USUARIO) {
     alert(`Hola, Tocayo! Yo también me llamo ${nombre_Usuario}`);
-}  else if (nombre_Usuario == "Jorge") {
+}else if (nombre_Usuario == "Jorge") {
     alert(`Hey! Mi tío se llama ${nombre_Usuario}`);
-}  else (nombre_Usuario.trim().length === 0) {
+}else if (nombre_Usuario.trim().length === 0) {
     alert(`Hola ${nombre_Usuario}`);
 }
-*/
+
 
 
 //Tarea 2:
 // Preguntar la edad del usuario
 // Hacerle saber si tiene más, menos ó la misma edad que nosotros.
-/*
+
 let edad_Usuario = prompt(Number("Ingrese su edad: "))
 
 function comparacion_Edad (edad_Usuario) {
@@ -44,7 +44,7 @@ function comparacion_Edad (edad_Usuario) {
     };
     
 alert(comparacion_Edad(edad_Usuario)) 
-*/
+
 // peeeeero la mejor forma es usar las const 
 
 
@@ -57,13 +57,13 @@ alert(comparacion_Edad(edad_Usuario))
 // Si no tiene documento, no dejarlo entrar al bar.
 // Si no entendemos la respuesta, le decimos que no entendimos la respuesta.
 // Punto bonus: SI, NO, Si, No, si, no.
-/*
+
 function patovica (documento, edad) {
    
     documento = prompt("Tiene documento? Si / No : ")
     edad = prompt("Que edad tenes?")
   
-   if (documento == "Si") and (edad >= 18) {
+   if (documento == "Si" && edad >= 18) {
         alert("Adelante, caballero");
     }
     else 
@@ -71,7 +71,7 @@ function patovica (documento, edad) {
 }
 
 console.log(patovica(documento,edad))
-/*
+
 const EDAD_MINIMA_PARA_ENTRAR= 18
 
 const usuarioTieneDocumento = (prompt("Tiene documento? Si/No : ") || '' ).toLowerCase();
@@ -88,4 +88,3 @@ if (documento = "Si") {
     }
 else
     alert ("Sin documento no pasas") 
-*/
