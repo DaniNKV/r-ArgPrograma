@@ -1,22 +1,23 @@
-/*
-TAREA: Empezar preguntando cuánta gente hay en el grupo familiar.
-Crear tantos inputs+labels como gente haya para completar la edad de cada integrante.
-Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad, la menor edad y el promedio del grupo familiar.
 
-Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN).
-*/
+// #########    Elementos del DOM    ######### //
 let DOM = {
+    //Botones
     siguientePasoBtn: document.querySelector('#siguiente-paso'),
-    cantidadFamiliares: document.querySelector('#cantidadFamiliares'),
+    calcularBtn: document.querySelector('#boton-calcular'),
+    resetearBtn: document.querySelector('#resetear'),
+    
+    //Datos app
+    cantidadFamiliares: document.querySelector('#cantidad-familiares'),
     integrantesDiv: document.querySelector('#integrantes'),
     integrante: [], //Todos los integrantes se pushean aca//
     preguntaTrabajo: [], //Los switches de trabajo se pushean aca//
-    calcularBtn: document.querySelector('#boton-calcular'),
+    
+    //Analisis de los datos
     analisisEdad: document.querySelector('#analisis-edad'),
     analisisSalario: document.querySelector('#analisis-salario')
 }
 
-
+// #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = function (event) {
     const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
     
@@ -24,7 +25,29 @@ DOM.siguientePasoBtn.onclick = function (event) {
     ocultarBotonSiguientePaso();
     event.preventDefault();
 };
+DOM.resetearBtn.onclick = function() { resetear() };
 
+DOM.calcularBtn.onclick = function (event) {
+    const numeros = obtenerEdadesIntegrantes();
+    const salarios = obtenerSalariosIntegrantes();
+
+    mostrarEdad('promedio', calcularPromedio(numeros));
+    mostrarEdad('menor', calcularMenor(numeros));
+    mostrarEdad('mayor', calcularMayor(numeros));
+    
+    mostrarSalario('promedio', calcularPromedio(salarios));
+    mostrarSalario('menor', calcularMenor(salarios));
+    mostrarSalario('mayor', calcularMayor(salarios));
+    
+    mostrarResultados();
+    
+    event.preventDefault();
+    
+
+};
+
+
+// #########    Interacción Principal  ######### //
 
 function crearIntegrantes (cantidadIntegrantes) {
     if (cantidadIntegrantes > 0) {
@@ -37,29 +60,6 @@ function crearIntegrantes (cantidadIntegrantes) {
     for(let i=0 ; i<cantidadIntegrantes; i++) {
         crearIntegrante(i);
     }
-}
-
-
-function borrarIntegrantesAnteriores() {
-    const $integrantes = document.querySelectorAll('#integrantes .integrante')
-    for (i=0 ; i<$integrantes.length ; i++) {
-        $integrantes[i].remove();
-  
-    };
-    DOM.integrante = [];
-    DOM.preguntaTrabajo = [];
-
-}
-
-document.querySelector('#resetear').onclick = function(){
-    resetear()
-}
-
-function resetear() {
-    borrarIntegrantesAnteriores();
-    ocultarBotonCalculo();
-    ocultarResultado();
-    mostrarBotonSiguientePaso();
 }
 
 function crearIntegrante (indice) {
@@ -122,6 +122,7 @@ function creaPreguntaTrabajo(indice) {
     labelTrabajo.appendChild(preguntaTrabajo);
     preguntaTrabajo.appendChild(spanTrabajo);
 }
+
 function creaInputSueldo (indice) {
     const inputSueldo = document.createElement('input');
     
@@ -131,22 +132,36 @@ function creaInputSueldo (indice) {
     
     DOM.integrante[indice].appendChild(inputSueldo);
 }
+
+
+
+// #########    Funciones de Reseteo    ######### //
+
+function resetear() {
+    borrarIntegrantesAnteriores();
+    ocultarBotonCalculo();
+    ocultarResultado();
+    mostrarBotonSiguientePaso();
+}
+
+function borrarIntegrantesAnteriores() {
+    const $integrantes = document.querySelectorAll('#integrantes .integrante')
+    for (i=0 ; i<$integrantes.length ; i++) {
+        $integrantes[i].remove();
+  
+    };
+    DOM.integrante = [];
+    DOM.preguntaTrabajo = [];
+
+}
+
 function eliminaInputSueldo (indice) {
     document.querySelector('.salario.salario' + (indice + 1)).remove()
     
 }
 
-document.querySelector('#boton-calcular').onclick = function (event) {
-    const numeros = obtenerEdadesIntegrantes();
-    mostrarEdad('promedio', calcularPromedio(numeros));
-    mostrarEdad('menor', calcularMenor(numeros));
-    mostrarEdad('mayor', calcularMayor(numeros));
-    mostrarResultados();
-    
-    event.preventDefault();
-    
 
-};
+// #########    Obtener datos ingresados por el usuario    ######### //
 
 function obtenerEdadesIntegrantes() {
     const $integrantes = document.querySelectorAll('.integrante input.input');
@@ -157,14 +172,40 @@ function obtenerEdadesIntegrantes() {
     return edades;
 }
 
+function obtenerSalariosIntegrantes() {
+    const $salarios = document.querySelectorAll('.integrante .salario');
+    const salarios = [] ;
+    console.log($salarios)
+    for(i=0 ; i < $salarios.length ; i++) {
+        salarios.push(Number($salarios[i].value));
+    }
+    return salarios;
+
+}
+
+
+
+
+// #########    Inyectar valores en el Análisis   ######### //
+
 function mostrarEdad(tipo, valor) {
     //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
     document.querySelector(`#${tipo}-edad`).textContent = valor
 }
+function mostrarSalario(tipo, valor) {
+    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
+    document.querySelector(`#${tipo}-salario`).textContent = valor
+}
+
+
+
+// #########    Mostrar / Ocultar elementos del DOM    ######### //
 
 function ocultarBotonSiguientePaso () {
-    if (DOM.cantidadFamiliares.value > 0) {
+    if (DOM.cantidadFamiliares.value >= 1) {
         DOM.siguientePasoBtn.className = 'oculto';
+        DOM.cantidadFamiliares.disabled = 'disabled';
+
     }else {
         mostrarBotonSiguientePaso();
     }
@@ -172,6 +213,8 @@ function ocultarBotonSiguientePaso () {
 
 function mostrarBotonSiguientePaso () {
     DOM.siguientePasoBtn.className = '';
+    DOM.cantidadFamiliares.disabled = "";
+
 }
 
 function mostrarBotonCalculo () {
@@ -187,14 +230,8 @@ function mostrarResultados(){
     DOM.analisisSalario.className = '';
 
 }
+
 function ocultarResultado() {
     DOM.analisisEdad.className = 'oculto';
     DOM.analisisSalario.className = 'oculto';
 }
-/*
-TAREA:
-Crear una interfaz que permita agregar ó quitar (botones agregar y quitar) inputs+labels para completar el salario anual de cada integrante de la familia que trabaje.
-Al hacer click en "calcular", mostrar en un elemento pre-existente el mayor salario anual, menor salario anual, salario anual promedio y salario mensual promedio.
-
-Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como 0).
-*/
