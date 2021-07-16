@@ -9,13 +9,8 @@ let DOM = {
 DOM.form.onsubmit = validarFormulario;
 
 function validarFormulario (event){
-    const nombre = DOM.form.nombre.value;
-    const ciudad = DOM.form.ciudad.value;
-    const descripcionRegalo = DOM.form['descripcion-regalo'].value;
 
-    const errorNombre = validarNombre(nombre);
-    const errorCiudad = validarCiudad(ciudad);
-    const errorDescripcionRegalo = validarDescripcionRegalo(descripcionRegalo);
+    validarCadaCampo();
     
     const errores = {
       nombre: errorNombre,
@@ -30,8 +25,15 @@ function validarFormulario (event){
     }
     event.preventDefault();
 }
+function validarCadaCampo () {
+  const nombre = DOM.form.nombre.value;
+  const ciudad = DOM.form.ciudad.value;
+  const descripcionRegalo = DOM.form['descripcion-regalo'].value;
 
-
+  return errorNombre = validarNombre(nombre),
+         errorCiudad = validarCiudad(ciudad),
+         errorDescripcionRegalo = validarDescripcionRegalo(descripcionRegalo);
+}
 // ######## GESTIÓN DE ERRORES  ######### //
 
 function manejarErrores(errores) {
