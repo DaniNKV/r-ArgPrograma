@@ -7,13 +7,13 @@
 	<link rel="stylesheet" href="css/wishlist.css">
 </head>
 
-<body>
+<body onload="mostrarDeseos()">
 
 	<header>
 		<ul>
 			<li><a href="index.html"> Add more wishes</a></li>
 			<li><h1>List of Wishes</h1></li>
-			<li><a href="result.html">Your Gift </a></li>
+			<li><a href="resultado.html">Your Gift </a></li>
 		</ul>
 	</header>
 
@@ -22,7 +22,7 @@
 		<div class="wish-list-container">
 			<h1> List of Wishes </h1>
 			<div class="wish-lists">
-				<ul class="wish-list">
+				<ul class="wish-list" id="wish-list">
 				</ul>
 			</div>
 		</div>
@@ -54,7 +54,6 @@
 			</li>
 		</ul>
 	</footer>
-
-<script src="js/main.js"></script>
+	<script src="js/scripts.js"></script>
 </body>
 </html>
