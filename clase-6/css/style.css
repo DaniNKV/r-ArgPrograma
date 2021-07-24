@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@200;300;400;600;700&display=swap');
+
+:root {
+    --ff-ppal: 'Lato', sans-serif;
+    --clr-acc: #A69076;
+    --clr-bg: #262626;
+    --clr-bg2: #404040;
+
+    --clr-verde: #1E4023;
+    --clr-rojo: #A64029;
+}
+
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-size: 16px;
+    background-color: var(--clr-bg) ;
+    font-family: 'Lato', sans-serif;
+    color: #fff;
+    margin: 0;
+}
+
+button {
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    transition: box-shadow 0.2s ease, scale 0.2s ease;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+
+input {
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 0.5rem;
+    appearance: none;
+    -moz-appearance: textfield;
+    color: #fff;
+    font-size: 1.6rem;
+    padding: .5rem;
+}
+
+button[type=reset] {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border: .5px solid var(--clr-acc);
+    color: #fff;
+    border-radius: .5rem;
+    padding: .5rem;
+    background: transparent;
+    transition: none;
+}
+
+button[type=reset]:active {
+    transform: translateX(-50%);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+button:active {
+    box-shadow: none;
+    transform: scale(0.98) ;
+}
+button:focus,
+input:focus {
+    outline: none;
+}
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5% auto;
+    max-width: 80rem;
+    background-color: var(--clr-bg2);
+    border-radius: 1rem;
+    font-size: 1.7rem;
+
+
+}
+.intro {
+    font-size: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.intro button {
+    width: 90%;
+    padding: 1rem;
+    border: none;
+    border-radius: .5rem;
+    font-size: 1.5rem;
+    background-color: var(--clr-acc);
+    color: #fff;
+}
+
+.intro label {
+    text-align: center;
+    letter-spacing: .5px;
+    font-size: 3rem;
+
+}
+
+.intro input {
+    text-align: center;
+    width: 90%;
+    padding: 1rem 0;
+    margin: -1rem;
+}
+
+.integrantes {
+    margin-top: 1rem;
+}
+
+.integrante {
+    padding: .5rem 0;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.integrante .input {
+    width: 5rem;
+    margin-left: .5rem;
+    padding: -1rem;
+    text-align: center;
+    font-size: 1.3rem;
+
+}
+
+.integrante .switch {
+    margin-left: 8.5rem;
+
+}
+
+.integrante input.salario {
+    width: 82.5%;
+    text-align: center;
+    margin-top: .3rem;
+    
+}
+
+#boton-calcular {
+    padding: 1rem;
+    font-size: 1.6rem;
+    background-color: var(--clr-acc);
+    border: none;
+    color: #fff;
+    width: 82.5%;
+    align-self: center;
+    border-radius: .5rem;
+    margin: 2rem;
+
+}
+
+.resultado {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 5rem;
+    font-size: 1.7rem;
+
+
+}
+
+.resultado strong {
+    margin-left: 2rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+
+
+}
+
+
+
+
+.oculto {
+    display: none;
+}
+
+
+
+
+ /* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #dedede;
+  -webkit-transition: .4s;
+  transition: .4s;
+
+  transform: scale(0.7);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--clr-bg);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--clr-acc);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--clr-acc);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
+
+.switch p {
+    transform: translate(-90%, -50%);
+    font-size: 1.5rem
+}
