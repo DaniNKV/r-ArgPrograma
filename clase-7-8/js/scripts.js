@@ -196,18 +196,21 @@ function mostrarDeseos () {
 
 
 // ######## ENVIAR REGALO AL USUARIO ######### //
-
-function CreaNumeroRandom (limite) {
-  //Crea un numero random entero del 0 al limite
-  numeroRandom = Math.floor(Math.random() * limite) + 1;
-
-  return numeroRandom
+async function buscarRegalo (regalo) {
+  response = await fetch(`https://api.unsplash.com/photos?per_page=2&query=${regalo}`, {
+    headers: {
+      Authorization: 'Client-ID nFqIGneTClhsupgxyQ1eq5BrZXpyeGGbkl0owLiVS1U'
+    }},
+  )
+  data = await response.json();
+  regaloImage = data[0].urls.regular
+  mostrarRegaloEnDOM(regaloImage)
 }
+
 function llenarContenido () {
   mostrarComportamientoRandom();
   mostrarRegalo();
 }
-
 
 function mostrarComportamientoRandom() {
   const cantidadComportamientos = Object.keys(comportamiento).length;
@@ -238,6 +241,15 @@ function mostrarRegalo() {
 
 }
 
+
+// ######## Funciones Auxiliares ######### //
+function CreaNumeroRandom (limite) {
+  //Crea un numero random entero del 0 al limite
+  numeroRandom = Math.floor(Math.random() * limite) + 1;
+
+  return numeroRandom
+}
+
 function establecerRegalo(regalo) {
   const regaloElegido = 
       regalo
@@ -247,18 +259,6 @@ function establecerRegalo(regalo) {
 
   buscarRegalo(regaloElegido);
 }
-
-async function buscarRegalo (regalo) {
-  response = await fetch(`https://api.unsplash.com/photos?per_page=2&query=${regalo}`, {
-    headers: {
-      Authorization: 'Client-ID nFqIGneTClhsupgxyQ1eq5BrZXpyeGGbkl0owLiVS1U'
-    }},
-  )
-  data = await response.json();
-  regaloImage = data[0].urls.regular
-  mostrarRegaloEnDOM(regaloImage)
-}
-
 
 function mostrarRegaloEnDOM (regalo) {
   DOM.giftImg.src = regalo
