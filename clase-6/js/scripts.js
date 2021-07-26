@@ -22,11 +22,19 @@ let DOM = {
 // #########    INTERACCIÓN PRINCIPAL  ######### //
 
 function segundoPaso (event) {
-    const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
-    
-    crearIntegrantes(cantidadIntegrantes);
-    ocultarBotonSiguientePaso();
+    const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value.trim());
+    const validacionCantidad = validarCantidadFamiliares(cantidadIntegrantes)
+
+    if (validacionCantidad == '') {
+        crearIntegrantes(cantidadIntegrantes);
+        ocultarBotonSiguientePaso();
+    }else {
+        mostrarError(validacionCantidad);
+
+    }
+
     event.preventDefault();
+
 };
 
 
@@ -65,9 +73,10 @@ function crearIntegrante (indice) {
 }
 
 function creaInputEdad (indice) {
-    const div = document.createElement('div');
-    const label = document.createElement('label');
-    const input = document.createElement('input');
+    const 
+        div = document.createElement('div'),
+        label = document.createElement('label'),
+        input = document.createElement('input');
 
     div.className = "integrante integrante" + (indice + 1);
 
@@ -76,6 +85,9 @@ function creaInputEdad (indice) {
     input.type = "number";
     input.className = "input"
     input.placeholder = "#"+(indice + 1)
+
+    input.addEventListener('change', e => validarEdad)
+
     DOM.integrantesDiv.appendChild(div)
     div.appendChild(label);
     div.appendChild(input);
@@ -115,6 +127,9 @@ function creaInputSueldo (indice) {
     inputSueldo.type = 'number';
     inputSueldo.placeholder = "Ingrese su sueldo anual"
     inputSueldo.className = "salario salario" + (indice + 1);
+
+    inputSueldo.addEventListener('change', e => validarSueldo)
+
     
     DOM.integrante[indice].appendChild(inputSueldo);
 }
@@ -249,9 +264,30 @@ function ocultarResultado() {
 
 
 // #########    Validaciones  ######### //
+function validarCantidadFamiliares (cantidadFamiliares) {
+    if (cantidadFamiliares == '') {
+        return 'Debe ingresar la cantidad de familiares';
+    }else if (!(Number.isInteger(cantidadFamiliares))) {
+        return 'No podés tener fracciones de familiar';
+    }else if (cantidadFamiliares <= 0) {
+        return 'Cantidad de familiares no válida'
+    }else {
+        return ''
+    }
+}
 
+function validarEdad () {
 
+}
 
+function validarSalario () {
+
+}
+
+function mostrarError (err) {
+    console.log(err)
+}
+ 
 
 // #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = segundoPaso;
@@ -259,3 +295,6 @@ DOM.siguientePasoBtn.onclick = segundoPaso;
 DOM.calcularBtn.onclick = calcularEdadesYSalarios;
 
 DOM.resetearBtn.onclick = resetear;
+
+
+
