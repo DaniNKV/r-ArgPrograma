@@ -236,6 +236,30 @@ button i {
 }
 
 
+#errores {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 2;
+    transform: translateX(-50%);
+  }
+  
+  .notificacion-error {
+    background-color: var(--clr-rojo);
+    color: rgb(255, 255, 255);
+    border-radius: .5rem;
+    font-size: 1.6rem;
+    letter-spacing: .3px;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+  }
+
+
 
 .oculto {
     display: none;

@@ -14,7 +14,10 @@ let DOM = {
     
     //Analisis de los datos
     analisisEdad: document.querySelector('#analisis-edad'),
-    analisisSalario: document.querySelector('#analisis-salario')
+    analisisSalario: document.querySelector('#analisis-salario'),
+
+    //Errores
+    errores : document.getElementById('errores')
 }
 
 
@@ -29,7 +32,7 @@ function segundoPaso (event) {
         crearIntegrantes(cantidadIntegrantes);
         ocultarBotonSiguientePaso();
     }else {
-        mostrarError(validacionCantidad);
+        crearNotificacionError(validacionCantidad);
 
     }
 
@@ -284,10 +287,24 @@ function validarSalario () {
 
 }
 
-function mostrarError (err) {
-    console.log(err)
+function crearNotificacionError(error) {
+    const existeError = document.querySelector('#errores .notificacion-error')
+    if(!existeError) {
+        const notif = document.createElement('DIV');
+        notif.classList.add('notificacion-error');    
+        notif.innerText = error;
+    
+        DOM.errores.appendChild(notif);
+    
+        setTimeout(() => {
+            notif.remove()
+        }, 4000)
+    }
 }
- 
+
+function resaltarError () {
+
+}
 
 // #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = segundoPaso;
