@@ -182,14 +182,18 @@ function obtenerEdadesIntegrantes() {
 function obtenerSalariosIntegrantes() {
     const $salarios = document.querySelectorAll('.integrante .salario');
     const salarios = [] ;
-    console.log($salarios)
     for(i=0 ; i < $salarios.length ; i++) {
-        salarios.push(Number($salarios[i].value));
+        salario = formatoDinero(Number($salarios[i].value))
+        salarios.push(salario);
     }
     return salarios;
 
 }
 
+function formatoDinero (numero) {
+    return numero.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+    
 
 
 
@@ -242,6 +246,10 @@ function ocultarResultado() {
     DOM.analisisEdad.className = 'oculto';
     DOM.analisisSalario.className = 'oculto';
 }
+
+
+// #########    Validaciones  ######### //
+
 
 
 

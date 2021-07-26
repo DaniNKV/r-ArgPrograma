@@ -108,7 +108,7 @@ button i {
 }
 
 .intro button {
-    width: 105%;
+    width: 100%;
     padding: 1rem;
     border: none;
     border-radius: .5rem;
@@ -127,7 +127,7 @@ button i {
 
 .intro input {
     text-align: center;
-    width: 90%;
+    width: 70%;
     padding: 1rem 0;
     margin: -1rem;
 }
@@ -162,7 +162,7 @@ button i {
 }
 
 .integrante input.salario {
-    width: 82.5%;
+    width: 100%;
     text-align: center;
     margin-top: .3rem;
     
@@ -174,7 +174,7 @@ button i {
     background-color: var(--clr-acc);
     border: none;
     color: #fff;
-    width: 90%;
+    width: 100%;
     align-self: center;
     border-radius: .5rem;
     margin: 2rem;
