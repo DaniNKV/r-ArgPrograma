@@ -17,38 +17,20 @@ let DOM = {
     analisisSalario: document.querySelector('#analisis-salario')
 }
 
-// #########    Event Listeners  ######### //
-DOM.siguientePasoBtn.onclick = function (event) {
+
+
+// #########    INTERACCIÓN PRINCIPAL  ######### //
+
+function segundoPaso (event) {
     const cantidadIntegrantes = Number(DOM.cantidadFamiliares.value);
     
     crearIntegrantes(cantidadIntegrantes);
     ocultarBotonSiguientePaso();
     event.preventDefault();
 };
-DOM.resetearBtn.onclick = function() { resetear() };
-
-DOM.calcularBtn.onclick = function (event) {
-    const numeros = obtenerEdadesIntegrantes();
-    const salarios = obtenerSalariosIntegrantes();
-
-    mostrarEdad('promedio', calcularPromedio(numeros));
-    mostrarEdad('menor', calcularMenor(numeros));
-    mostrarEdad('mayor', calcularMayor(numeros));
-    
-    mostrarSalario('promedio', calcularPromedio(salarios));
-    mostrarSalario('menor', calcularMenor(salarios));
-    mostrarSalario('mayor', calcularMayor(salarios));
-    
-    mostrarResultados();
-    
-    event.preventDefault();
-    
-
-};
 
 
-// #########    Interacción Principal  ######### //
-
+// Sección EDAD
 function crearIntegrantes (cantidadIntegrantes) {
     if (cantidadIntegrantes > 0) {
         mostrarBotonCalculo();
@@ -89,38 +71,42 @@ function creaInputEdad (indice) {
 
     div.className = "integrante integrante" + (indice + 1);
 
-    label.textContent = "Edad del integrante: #" + (indice + 1);
+    label.textContent = "Edad del integrante:"
 
     input.type = "number";
     input.className = "input"
-    
+    input.placeholder = "#"+(indice + 1)
     DOM.integrantesDiv.appendChild(div)
     div.appendChild(label);
     div.appendChild(input);
 
     DOM.integrante.push(div)
-
-
-
 }
 
+
+
+// Sección SALARIO
 function creaPreguntaTrabajo(indice) {
     const labelTrabajo = document.createElement('label');
     const preguntaTrabajo = document.createElement('input');
     const spanTrabajo = document.createElement('span');
     DOM.preguntaTrabajo.push(preguntaTrabajo);
+    const p = document.createElement('P')
+
 
     labelTrabajo.className = 'switch';
-    labelTrabajo.innerHTML = "Trabaja?"
+    p.innerText = "Trabaja?"
 
     preguntaTrabajo.type = 'checkbox';
     preguntaTrabajo.className = 'input-trabajo';
 
-    spanTrabajo.className = 'slider-round';
+    spanTrabajo.className = 'slider round';
 
     DOM.integrante[indice].appendChild(labelTrabajo);
+    labelTrabajo.appendChild(p);
     labelTrabajo.appendChild(preguntaTrabajo);
-    preguntaTrabajo.appendChild(spanTrabajo);
+
+    labelTrabajo.appendChild(spanTrabajo);
 }
 
 function creaInputSueldo (indice) {
@@ -132,6 +118,27 @@ function creaInputSueldo (indice) {
     
     DOM.integrante[indice].appendChild(inputSueldo);
 }
+
+
+// Calcular con las edades y salarios ingresados
+function calcularEdadesYSalarios (event) {
+    const numeros = obtenerEdadesIntegrantes();
+    const salarios = obtenerSalariosIntegrantes();
+
+    mostrarEdad('promedio', calcularPromedio(numeros));
+    mostrarEdad('menor', calcularMenor(numeros));
+    mostrarEdad('mayor', calcularMayor(numeros));
+    
+    mostrarSalario('promedio', calcularPromedio(salarios));
+    mostrarSalario('menor', calcularMenor(salarios));
+    mostrarSalario('mayor', calcularMayor(salarios));
+    
+    mostrarResultados();
+    
+    event.preventDefault();
+    
+};
+
 
 
 
@@ -235,3 +242,12 @@ function ocultarResultado() {
     DOM.analisisEdad.className = 'oculto';
     DOM.analisisSalario.className = 'oculto';
 }
+
+
+
+// #########    Event Listeners  ######### //
+DOM.siguientePasoBtn.onclick = segundoPaso;
+
+DOM.calcularBtn.onclick = calcularEdadesYSalarios;
+
+DOM.resetearBtn.onclick = resetear;
