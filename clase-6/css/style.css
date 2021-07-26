@@ -77,12 +77,18 @@ button:focus,
 input:focus {
     outline: none;
 }
+
+button i {
+    font-family: 'Font Awesome 5 Free';
+    font-size: 2rem;
+}
 .container {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 5% auto;
+    padding: 0 2rem;
     max-width: 80rem;
     background-color: var(--clr-bg2);
     border-radius: 1rem;
@@ -102,7 +108,7 @@ input:focus {
 }
 
 .intro button {
-    width: 90%;
+    width: 105%;
     padding: 1rem;
     border: none;
     border-radius: .5rem;
@@ -115,6 +121,7 @@ input:focus {
     text-align: center;
     letter-spacing: .5px;
     font-size: 3rem;
+    margin-top: 1.5rem;
 
 }
 
@@ -132,7 +139,7 @@ input:focus {
 .integrante {
     padding: .5rem 0;
     width: 100%;
-
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -167,7 +174,7 @@ input:focus {
     background-color: var(--clr-acc);
     border: none;
     color: #fff;
-    width: 82.5%;
+    width: 90%;
     align-self: center;
     border-radius: .5rem;
     margin: 2rem;
@@ -192,6 +199,41 @@ input:focus {
 
 }
 
+@media (min-width: 700px) {
+    .intro .intro-label {
+        font-size: 3.5rem
+    }
+
+    .intro input {
+        width: 40%;
+    }
+    
+    .integrante {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        width: 100%;
+        padding-left: 7rem;
+    }
+
+    .integrante input.salario {
+        width: 35%;
+        margin-left: 1.5rem;
+    }
+
+    .resultado {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 4rem;
+    }
+    #analisis-edad {
+        width: 40%;
+    }
+    #analisis-salario {
+        width: 40%;
+    }
+}
 
 
 
