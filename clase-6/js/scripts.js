@@ -95,8 +95,9 @@ function creaInputEdad (indice) {
 
     DOM.integrante.push(div)
 
-    input.oninput = (e) => validarEdadEnVivo(e);
-    
+    input.oninput = (e) => {
+        validarEnVivo(validarEdad(e.target.value), e.target)
+    }
 }
 
 
@@ -131,6 +132,8 @@ function creaInputSueldo (indice) {
     inputSueldo.className = "salario salario" + (indice + 1);
     
     DOM.integrante[indice].appendChild(inputSueldo);
+
+    
 }
 
 
@@ -279,7 +282,8 @@ function validarCantidadFamiliares (cantidadFamiliares) {
     }
 }
 
-function validarEdad (edadIntegrante) {
+function validarEdad (numero) {
+    const edadIntegrante = Number(numero)
     const esEntero = Number.isInteger(edadIntegrante)
     if(edadIntegrante < 0 || edadIntegrante > 150) {
       return 'La edad no puede ser menor a 0 o mayor a 150'
@@ -291,19 +295,17 @@ function validarEdad (edadIntegrante) {
         return ''
     }
 }
-function validarEdadEnVivo (e) {
-    const edad = Number(e.target.value);
-    const edadValidada = validarEdad(edad);
-
-    if (edadValidada == '') {
-        e.target.style.borderColor = 'var(--clr-verde)';
+function validarEnVivo (campoValidado, elemento) {
+    if (campoValidado == '') {
+        elemento.style.borderColor = 'var(--clr-verde)';
     }else {
-        e.target.style.borderColor = 'var(--clr-rojo)';
+        elemento.style.borderColor = 'var(--clr-rojo)';
     }
 }
 
-function validarSalario () {
-    
+
+function validarSalario (numero) {
+    console.log('123')
 }
 
 function crearNotificacionError(error) {
