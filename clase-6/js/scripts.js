@@ -15,6 +15,7 @@ let DOM = {
     //Analisis de los datos
     analisisEdad: document.querySelector('#analisis-edad'),
     analisisSalario: document.querySelector('#analisis-salario'),
+    resultado : document.querySelector('.resultado'),
 
     //Errores
     errores : document.getElementById('errores')
@@ -33,6 +34,7 @@ function segundoPaso (event) {
         ocultarBotonSiguientePaso();
     }else {
         crearNotificacionError(validacionCantidad);
+        DOM.cantidadFamiliares.value = ''
 
     }
 
@@ -82,45 +84,42 @@ function creaInputEdad (indice) {
         input = document.createElement('input');
 
     div.className = "integrante integrante" + (indice + 1);
-
     label.textContent = "Edad del integrante:"
-
     input.type = "number";
     input.className = "input"
     input.placeholder = "#"+(indice + 1)
-
-    input.addEventListener('change', e => validarEdad)
 
     DOM.integrantesDiv.appendChild(div)
     div.appendChild(label);
     div.appendChild(input);
 
     DOM.integrante.push(div)
-}
 
+    input.oninput = (e) => validarEdadEnVivo(e);
+    
+}
 
 
 // Sección SALARIO
 function creaPreguntaTrabajo(indice) {
-    const labelTrabajo = document.createElement('label');
-    const preguntaTrabajo = document.createElement('input');
-    const spanTrabajo = document.createElement('span');
-    DOM.preguntaTrabajo.push(preguntaTrabajo);
-    const p = document.createElement('P')
+    const 
+        labelTrabajo = document.createElement('label'),
+        preguntaTrabajo = document.createElement('input'),
+        spanTrabajo = document.createElement('span'),
+        p = document.createElement('P');
 
-
+    // Elementos del switch 
     labelTrabajo.className = 'switch';
     p.innerText = "Trabaja?"
-
     preguntaTrabajo.type = 'checkbox';
     preguntaTrabajo.className = 'input-trabajo';
-
     spanTrabajo.className = 'slider round';
-
+   
+    DOM.preguntaTrabajo.push(preguntaTrabajo);
+    
     DOM.integrante[indice].appendChild(labelTrabajo);
     labelTrabajo.appendChild(p);
     labelTrabajo.appendChild(preguntaTrabajo);
-
     labelTrabajo.appendChild(spanTrabajo);
 }
 
@@ -130,22 +129,20 @@ function creaInputSueldo (indice) {
     inputSueldo.type = 'number';
     inputSueldo.placeholder = "Ingrese su sueldo anual"
     inputSueldo.className = "salario salario" + (indice + 1);
-
-    inputSueldo.addEventListener('change', e => validarSueldo)
-
     
     DOM.integrante[indice].appendChild(inputSueldo);
 }
 
 
+
 // Calcular con las edades y salarios ingresados
 function calcularEdadesYSalarios (event) {
-    const numeros = obtenerEdadesIntegrantes();
+    const edades = obtenerEdadesIntegrantes();
     const salarios = obtenerSalariosIntegrantes();
 
-    mostrarEdad('promedio', calcularPromedio(numeros));
-    mostrarEdad('menor', calcularMenor(numeros));
-    mostrarEdad('mayor', calcularMayor(numeros));
+    mostrarEdad('promedio', calcularPromedio(edades));
+    mostrarEdad('menor', calcularMenor(edades));
+    mostrarEdad('mayor', calcularMayor(edades));
     
     mostrarSalario('promedio', calcularPromedio(salarios));
     mostrarSalario('menor', calcularMenor(salarios));
@@ -255,12 +252,14 @@ function ocultarBotonCalculo(){
 }
 
 function mostrarResultados(){
+    DOM.resultado.classList.remove('oculto');
     DOM.analisisEdad.className = '';
     DOM.analisisSalario.className = '';
 
 }
 
 function ocultarResultado() {
+    DOM.resultado.classList.add('oculto');
     DOM.analisisEdad.className = 'oculto';
     DOM.analisisSalario.className = 'oculto';
 }
@@ -268,9 +267,10 @@ function ocultarResultado() {
 
 // #########    Validaciones  ######### //
 function validarCantidadFamiliares (cantidadFamiliares) {
+    const esEntero = Number.isInteger(cantidadFamiliares)
     if (cantidadFamiliares == '') {
         return 'Debe ingresar la cantidad de familiares';
-    }else if (!(Number.isInteger(cantidadFamiliares))) {
+    }else if (!esEntero) {
         return 'No podés tener fracciones de familiar';
     }else if (cantidadFamiliares <= 0) {
         return 'Cantidad de familiares no válida'
@@ -279,17 +279,36 @@ function validarCantidadFamiliares (cantidadFamiliares) {
     }
 }
 
-function validarEdad () {
+function validarEdad (edadIntegrante) {
+    const esEntero = Number.isInteger(edadIntegrante)
+    if(edadIntegrante < 0 || edadIntegrante > 150) {
+      return 'La edad no puede ser menor a 0 o mayor a 150'
+    }else if (!esEntero) {
+        return 'La edad no puede ser fraccionaria'
+    }else if (edadIntegrante == ''){
+        return 'Debe ingresar la edad'
+    }else {
+        return ''
+    }
+}
+function validarEdadEnVivo (e) {
+    const edad = Number(e.target.value);
+    const edadValidada = validarEdad(edad);
 
+    if (edadValidada == '') {
+        e.target.style.borderColor = 'var(--clr-verde)';
+    }else {
+        e.target.style.borderColor = 'var(--clr-rojo)';
+    }
 }
 
 function validarSalario () {
-
+    
 }
 
 function crearNotificacionError(error) {
-    const existeError = document.querySelector('#errores .notificacion-error')
-    if(!existeError) {
+    const existeErrorEl = document.querySelector('#errores .notificacion-error')
+    if(!existeErrorEl) {
         const notif = document.createElement('DIV');
         notif.classList.add('notificacion-error');    
         notif.innerText = error;
@@ -299,6 +318,7 @@ function crearNotificacionError(error) {
         setTimeout(() => {
             notif.remove()
         }, 4000)
+
     }
 }
 
