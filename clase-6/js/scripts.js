@@ -133,6 +133,10 @@ function creaInputSueldo (indice) {
     
     DOM.integrante[indice].appendChild(inputSueldo);
 
+    inputSueldo.oninput = (e) => {
+        validarEnVivo(validarSalario(e.target.value), e.target)
+        console.log((validarSalario(e.target.value)))
+    }
     
 }
 
@@ -192,7 +196,7 @@ function obtenerEdadesIntegrantes() {
     const $integrantes = document.querySelectorAll('.integrante input.input');
     const edades = [] ;
     for(i=0 ; i < $integrantes.length ; i++) {
-        edades.push(Number($integrantes[i].value));
+        edades.push(Number($integrantes[i].value.trim()));
     }
     return edades;
 }
@@ -200,18 +204,17 @@ function obtenerEdadesIntegrantes() {
 function obtenerSalariosIntegrantes() {
     const $salarios = document.querySelectorAll('.integrante .salario');
     const salarios = [] ;
-    for(i=0 ; i < $salarios.length ; i++) {
-        salario = formatoDinero(Number($salarios[i].value))
-        salarios.push(salario);
-    }
+
+    $salarios.forEach(salario => {
+        const sueldo = Number(salario.value);
+        const salarioValidado = validarSalario(sueldo);
+        if (salarioValidado == '') {
+            salarios.push(sueldo)
+        }
+    });
     return salarios;
 
 }
-
-function formatoDinero (numero) {
-    return numero.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-}
-    
 
 
 
@@ -223,8 +226,13 @@ function mostrarEdad(tipo, valor) {
 }
 function mostrarSalario(tipo, valor) {
     //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
-    document.querySelector(`#${tipo}-salario`).textContent = valor
+    document.querySelector(`#${tipo}-salario`).textContent = formatoDinero(valor)
 }
+
+function formatoDinero (numero) {
+    return numero.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+    
 
 
 
@@ -269,6 +277,8 @@ function ocultarResultado() {
 
 
 // #########    Validaciones  ######### //
+
+//Validaciones individuales
 function validarCantidadFamiliares (cantidadFamiliares) {
     const esEntero = Number.isInteger(cantidadFamiliares)
     if (cantidadFamiliares == '') {
@@ -295,17 +305,27 @@ function validarEdad (numero) {
         return ''
     }
 }
+
+function validarSalario (numero) {
+    const salario = Number(numero);
+    if (salario < 0) {
+        return 'El salario no puede ser negativo' 
+    }else if (salario == '' || NaN) {
+        return 'El salario debe ser un número'
+    }else if (salario <= 1000) {
+        return 'El salario anual debe ser mayor que 1.000'
+    }else {
+        return ''
+    }
+}
+
+// Funciones generales de validación
 function validarEnVivo (campoValidado, elemento) {
     if (campoValidado == '') {
         elemento.style.borderColor = 'var(--clr-verde)';
     }else {
         elemento.style.borderColor = 'var(--clr-rojo)';
     }
-}
-
-
-function validarSalario (numero) {
-    console.log('123')
 }
 
 function crearNotificacionError(error) {
