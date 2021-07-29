@@ -34,13 +34,13 @@ function comparacion_Edad (edad_Usuario) {
         alert("Tienes mi edad!");
     }
     else if (edad_Usuario < 23){
-        alert("Eres mas peke que yo");
+        alert("Eres mas peque que yo");
     }
     else if (edad_Usuario > 23){
         alert("Eres grande, muy grande")
     }
     else
-        alert("numeros papi, numeros, es tu edad gordi")
+        alert("Las edades llevan numeros")
     };
     
 alert(comparacion_Edad(edad_Usuario)) 
@@ -81,7 +81,7 @@ if (documento = "Si") {
         alert ("Bienvenido al Bar")
     }
     else if (edad < EDAD_MINIMA_PARA_ENTRAR ) {
-        alert ("No puedes pasar, a tu casa, novato")
+        alert ("No puedes pasar, a tu casa")
     }
     else 
         alert ("No te entiendo")
