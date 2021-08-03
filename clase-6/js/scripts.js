@@ -135,7 +135,6 @@ function creaInputSueldo (indice) {
 
     inputSueldo.oninput = (e) => {
         validarEnVivo(validarSalario(e.target.value), e.target)
-        console.log((validarSalario(e.target.value)))
     }
     
 }
@@ -144,22 +143,70 @@ function creaInputSueldo (indice) {
 
 // Calcular con las edades y salarios ingresados
 function calcularEdadesYSalarios (event) {
-    const edades = obtenerEdadesIntegrantes();
-    const salarios = obtenerSalariosIntegrantes();
+    const edades = obtenerEdadesIntegrantes(),
+          salarios = obtenerSalariosIntegrantes();
 
+    let erroresEdad = 0;
+    let erroresSalario = 0;
+    let errores = [
+        {msj: '', type: 1, index: []},
+        {msj: '', type: 2, index: []},
+        {msj: '', type: 3, index: []}];
+
+    edades.forEach((edad, idx) => {
+      
+        const error = validarEdad(edad);
+        if (error !== '') {
+            const mensaje = error.msj;
+            erroresEdad++;
+            errores[error.type - 1].msj = mensaje;
+            errores[error.type - 1].index.push(`${idx + 1}`);
+        }
+        return erroresEdad, errores;
+    });
+    console.log(errores)
+    
+    if(erroresEdad === 0) {
+        calcularEdades(edades);
+        calcularSalarios(salarios);
+        mostrarResultados();
+    } else {
+        errores.forEach(error => {
+            if(error.msj !== ''){
+            imprimirErrorDOM(error.msj, error.index)
+            console.log('hola')
+        }})
+    }
+    
+    event.preventDefault();
+}
+
+
+function calcularEdades (edades) {
     mostrarEdad('promedio', calcularPromedio(edades));
     mostrarEdad('menor', calcularMenor(edades));
     mostrarEdad('mayor', calcularMayor(edades));
-    
+}
+
+function calcularSalarios (salarios) { 
     mostrarSalario('promedio', calcularPromedio(salarios));
     mostrarSalario('menor', calcularMenor(salarios));
     mostrarSalario('mayor', calcularMayor(salarios));
-    
-    mostrarResultados();
-    
-    event.preventDefault();
-    
-};
+}
+
+
+function imprimirErrorDOM(errorMsj, errorIdxArr) {
+    const 
+        $div = document.createElement('DIV'),
+        $p = document.createElement('P');
+
+    $p.innerText = `${errorMsj} en los integrantes: ${errorIdxArr.toString()}`
+    $p.style.color = 'red'
+    $p.style.textAlign = 'center'
+
+    DOM.resultado.appendChild($div);
+    $div.appendChild($p);    
+}
 
 
 
@@ -169,7 +216,7 @@ function calcularEdadesYSalarios (event) {
 function resetear() {
     borrarIntegrantesAnteriores();
     ocultarBotonCalculo();
-    ocultarResultado();
+    ocultarResultados();
     mostrarBotonSiguientePaso();
 }
 
@@ -195,7 +242,7 @@ function eliminaInputSueldo (indice) {
 function obtenerEdadesIntegrantes() {
     const $integrantes = document.querySelectorAll('.integrante input.input');
     const edades = [] ;
-    for(i=0 ; i < $integrantes.length ; i++) {
+     for(i=0 ; i < $integrantes.length ; i++) {
         edades.push(Number($integrantes[i].value.trim()));
     }
     return edades;
@@ -204,10 +251,10 @@ function obtenerEdadesIntegrantes() {
 function obtenerSalariosIntegrantes() {
     const $salarios = document.querySelectorAll('.integrante .salario');
     const salarios = [] ;
-
     $salarios.forEach(salario => {
         const sueldo = Number(salario.value);
         const salarioValidado = validarSalario(sueldo);
+       
         if (salarioValidado == '') {
             salarios.push(sueldo)
         }
@@ -269,7 +316,7 @@ function mostrarResultados(){
 
 }
 
-function ocultarResultado() {
+function ocultarResultados() {
     DOM.resultado.classList.add('oculto');
     DOM.analisisEdad.className = 'oculto';
     DOM.analisisSalario.className = 'oculto';
@@ -296,14 +343,24 @@ function validarEdad (numero) {
     const edadIntegrante = Number(numero)
     const esEntero = Number.isInteger(edadIntegrante)
     if(edadIntegrante < 0 || edadIntegrante > 150) {
-      return 'La edad no puede ser menor a 0 o mayor a 150'
+        return {
+            msj: 'La edad no puede ser menor a 0 o mayor a 150',
+            type: 1
+        };
     }else if (!esEntero) {
-        return 'La edad no puede ser fraccionaria'
+        return {
+            msj: 'La edad no puede ser fraccionaria',
+            type: 2
+        };
     }else if (edadIntegrante == ''){
-        return 'Debe ingresar la edad'
+        return {
+            msj: 'Debe ingresar la edad numérica',
+            type: 3 
+        };
     }else {
         return ''
     }
+
 }
 
 function validarSalario (numero) {
@@ -328,25 +385,21 @@ function validarEnVivo (campoValidado, elemento) {
     }
 }
 
-function crearNotificacionError(error) {
+function crearNotificacionError(errorMsj) {
     const existeErrorEl = document.querySelector('#errores .notificacion-error')
     if(!existeErrorEl) {
         const notif = document.createElement('DIV');
         notif.classList.add('notificacion-error');    
-        notif.innerText = error;
+        notif.innerText = errorMsj;
     
         DOM.errores.appendChild(notif);
     
         setTimeout(() => {
             notif.remove()
         }, 4000)
-
     }
 }
 
-function resaltarError () {
-
-}
 
 // #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = segundoPaso;
