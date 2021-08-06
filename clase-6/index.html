@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    <div id="errores"></div>
     <form class="container">
         <div class="intro">
             <label class="intro-label">¿Cuántas personas hay en tu familia?</label>
@@ -26,7 +25,7 @@
                 Calcular
         </button>
            
-        <div class="resultado">
+        <div class="resultado oculto">
             <div id="analisis-edad" class="analisis oculto">
                 <p>La mayor edad es: <strong id="mayor-edad"></strong></p>
                 <p>La menor edad es:<strong id="menor-edad"></strong></p>
@@ -38,11 +37,19 @@
                 <p>El promedio de salarios es:<strong id="promedio-salario"></strong></p>
             </div><!--Analisis Salario-->
         </div>
+
+        <div class="errores">
+
+        </div>
     
         <button type="reset" id="resetear">
             <i class="fas fa-sync-alt"></i>
         </button>
     </form>
+
+
+    <div id="erroresPop"></div>
+
 
 </body>
 

@@ -345,17 +345,17 @@ function validarEdad (numero) {
     if(edadIntegrante < 0 || edadIntegrante > 150) {
         return {
             msj: 'La edad no puede ser menor a 0 o mayor a 150',
-            type: 1
+            tipo: 1
         };
     }else if (!esEntero) {
         return {
             msj: 'La edad no puede ser fraccionaria',
-            type: 2
+            tipo: 2
         };
     }else if (edadIntegrante == ''){
         return {
             msj: 'Debe ingresar la edad numérica',
-            type: 3 
+            tipo: 3 
         };
     }else {
         return ''
@@ -392,7 +392,7 @@ function crearNotificacionError(errorMsj) {
         notif.classList.add('notificacion-error');    
         notif.innerText = errorMsj;
     
-        DOM.errores.appendChild(notif);
+        DOM.erroresPop.appendChild(notif);
     
         setTimeout(() => {
             notif.remove()
@@ -404,7 +404,7 @@ function crearNotificacionError(errorMsj) {
 // #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = segundoPaso;
 
-DOM.calcularBtn.onclick = calcularEdadesYSalarios;
+DOM.calcularBtn.onclick = calcularTodo;
 
 DOM.resetearBtn.onclick = resetear;
 
