@@ -150,15 +150,25 @@ function calcularTodo (event) {
           salarios = obtenerSalariosIntegrantes();
 
     const erroresEdadArr = manejarErrores(edades);
+    const hayErrores = erroresEdadArr.length > 0;
+    
+    limpiarErrores();
+    
+    if (hayErrores) {
+        ocultarResultados()
+        erroresEdadArr.forEach(error => imprimirErrorDOM(error.mensaje, error.index))
+    }else {
+        calcularEdades(edades);
+        mostrarResultados();
 
+    }
+    
 
     event.preventDefault();
 }
 
 function manejarErrores(edades) {
     let errores = [];
-    let erroresEdad = 0;
-    let erroresSalario = 0;
 
     edades.forEach((edad, idx) => {
         const errorEdad = validarEdad(edad);
@@ -224,6 +234,7 @@ function resetear() {
     ocultarBotonCalculo();
     ocultarResultados();
     mostrarBotonSiguientePaso();
+    
 }
 
 function borrarIntegrantesAnteriores() {
