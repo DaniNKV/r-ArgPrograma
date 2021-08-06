@@ -1,6 +1,8 @@
 
 // #########    Elementos del DOM    ######### //
 let DOM = {
+    container: document.querySelector('.container'),
+    
     //Botones
     siguientePasoBtn: document.querySelector('#siguiente-paso'),
     calcularBtn: document.querySelector('#boton-calcular'),
@@ -18,7 +20,8 @@ let DOM = {
     resultado : document.querySelector('.resultado'),
 
     //Errores
-    errores : document.getElementById('errores')
+    erroresPop : document.getElementById('erroresPop'),
+    erroresDiv : document.querySelector('.errores')
 }
 
 
@@ -142,46 +145,48 @@ function creaInputSueldo (indice) {
 
 
 // Calcular con las edades y salarios ingresados
-function calcularEdadesYSalarios (event) {
+function calcularTodo (event) {
     const edades = obtenerEdadesIntegrantes(),
           salarios = obtenerSalariosIntegrantes();
 
-    let erroresEdad = 0;
-    let erroresSalario = 0;
-    let errores = [
-        {msj: '', type: 1, index: []},
-        {msj: '', type: 2, index: []},
-        {msj: '', type: 3, index: []}];
+    const erroresEdadArr = manejarErrores(edades);
 
-    edades.forEach((edad, idx) => {
-      
-        const error = validarEdad(edad);
-        if (error !== '') {
-            const mensaje = error.msj;
-            erroresEdad++;
-            errores[error.type - 1].msj = mensaje;
-            errores[error.type - 1].index.push(`${idx + 1}`);
-        }
-        return erroresEdad, errores;
-    });
-    console.log(errores)
-    
-    if(erroresEdad === 0) {
-        calcularEdades(edades);
-        calcularSalarios(salarios);
-        mostrarResultados();
-    } else {
-        errores.forEach(error => {
-            if(error.msj !== ''){
-            imprimirErrorDOM(error.msj, error.index)
-            console.log('hola')
-        }})
-    }
-    
+
     event.preventDefault();
 }
 
+function manejarErrores(edades) {
+    let errores = [];
+    let erroresEdad = 0;
+    let erroresSalario = 0;
 
+    edades.forEach((edad, idx) => {
+        const errorEdad = validarEdad(edad);
+
+        if (errorEdad !== '') {
+            const mensaje = errorEdad.msj;
+            const tipo = errorEdad.tipo;
+            const index = `${idx + 1}`;
+            
+            if (errores.length === 0) {
+                errores.push({ tipo, index, mensaje });
+            } else {
+                errores.forEach(error => {
+                    if(error.tipo === tipo) {
+                        error.index += `, ${index}`;
+                    }else {
+                        errores.push({ tipo, index, mensaje });
+                    }
+                })
+            }
+        }
+    });
+    return errores;
+}
+/*          const mensaje = error.msj;
+            errores[error.type - 1].msj = mensaje;
+            errores[error.type - 1].index.push(`${idx + 1}`);
+   */ 
 function calcularEdades (edades) {
     mostrarEdad('promedio', calcularPromedio(edades));
     mostrarEdad('menor', calcularMenor(edades));
@@ -195,16 +200,16 @@ function calcularSalarios (salarios) {
 }
 
 
-function imprimirErrorDOM(errorMsj, errorIdxArr) {
+function imprimirErrorDOM(errorMsj, errorIdx) {
     const 
         $div = document.createElement('DIV'),
         $p = document.createElement('P');
 
-    $p.innerText = `${errorMsj} en los integrantes: ${errorIdxArr.toString()}`
+    $p.innerText = `${errorMsj} en los siguientes integrantes: ${errorIdx}`
     $p.style.color = 'red'
     $p.style.textAlign = 'center'
 
-    DOM.resultado.appendChild($div);
+    DOM.erroresDiv.appendChild($div);
     $div.appendChild($p);    
 }
 
@@ -214,6 +219,7 @@ function imprimirErrorDOM(errorMsj, errorIdxArr) {
 // #########    Funciones de Reseteo    ######### //
 
 function resetear() {
+    limpiarErrores();
     borrarIntegrantesAnteriores();
     ocultarBotonCalculo();
     ocultarResultados();
@@ -313,7 +319,6 @@ function mostrarResultados(){
     DOM.resultado.classList.remove('oculto');
     DOM.analisisEdad.className = '';
     DOM.analisisSalario.className = '';
-
 }
 
 function ocultarResultados() {
@@ -322,7 +327,10 @@ function ocultarResultados() {
     DOM.analisisSalario.className = 'oculto';
 }
 
-
+function limpiarErrores() {
+    errores = [];
+    DOM.erroresDiv.innerHTML = '';
+}
 // #########    Validaciones  ######### //
 
 //Validaciones individuales
