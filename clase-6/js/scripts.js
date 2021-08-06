@@ -35,6 +35,7 @@ function segundoPaso (event) {
     if (validacionCantidad == '') {
         crearIntegrantes(cantidadIntegrantes);
         ocultarBotonSiguientePaso();
+        DOM.calcularBtn.focus();
     }else {
         crearNotificacionError(validacionCantidad);
         DOM.cantidadFamiliares.value = ''
@@ -149,7 +150,7 @@ function calcularTodo (event) {
     const edades = obtenerEdadesIntegrantes(),
           salarios = obtenerSalariosIntegrantes();
 
-    const erroresEdadArr = manejarErrores(edades);
+    const erroresEdadArr = manejarErroresEdad(edades);
     const hayErrores = erroresEdadArr.length > 0;
     
     limpiarErrores();
@@ -167,7 +168,7 @@ function calcularTodo (event) {
     event.preventDefault();
 }
 
-function manejarErrores(edades) {
+function manejarErroresEdad(edades) {
     let errores = [];
 
     edades.forEach((edad, idx) => {
@@ -215,9 +216,7 @@ function imprimirErrorDOM(errorMsj, errorIdx) {
         $div = document.createElement('DIV'),
         $p = document.createElement('P');
 
-    $p.innerText = `${errorMsj} en los siguientes integrantes: ${errorIdx}`
-    $p.style.color = 'red'
-    $p.style.textAlign = 'center'
+    $p.innerHTML = `${errorMsj} en los siguientes integrantes: <span class="error-span">${errorIdx}</span>`
 
     DOM.erroresDiv.appendChild($div);
     $div.appendChild($p);    
@@ -255,7 +254,6 @@ function eliminaInputSueldo (indice) {
 
 
 // #########    Obtener datos ingresados por el usuario    ######### //
-
 function obtenerEdadesIntegrantes() {
     const $integrantes = document.querySelectorAll('.integrante input.input');
     const edades = [] ;

@@ -7,7 +7,7 @@
     --clr-bg2: #404040;
 
     --clr-verde: #18b164;
-    --clr-rojo: #a55340;
+    --clr-rojo: #A64029;
 
     --box-shadow: 0 2px 10px rgba(131, 126, 116, 0.1), 2px 4px 5px rgba(0, 0, 0, 0.3);
 }
@@ -248,7 +248,7 @@ button i {
 }
 
 
-#erroresPop {
+#errores {
     position: fixed;
     top: 1rem;
     left: 50%;
@@ -271,6 +271,20 @@ button i {
     font-weight: bold;
   }
 
+  .errores p {
+    color :rgb(255, 116, 116);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9);
+    font-size: 1.8rem;
+    letter-spacing: .3px;
+    text-align: center;
+
+  }
+
+  .errores span.error-span {
+      color: #fff;
+      font-size: 1.8rem;
+  }
+
   
 .integrante input.salario.error,
 .integrante input.input.error {
@@ -281,6 +295,7 @@ button i {
 
 .oculto {
     display: none;
+
 }
 
 
