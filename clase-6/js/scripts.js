@@ -351,6 +351,8 @@ function validarCantidadFamiliares (cantidadFamiliares) {
         return 'No podés tener fracciones de familiar';
     }else if (cantidadFamiliares <= 0) {
         return 'Cantidad de familiares no válida'
+    }else if (cantidadFamiliares >= 20) {
+        return 'La cantidad de familiares debe ser menor a 20 miembros'
     }else {
         return ''
     }
