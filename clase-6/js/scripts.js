@@ -403,7 +403,7 @@ function validarEnVivo (campoValidado, elemento) {
 }
 
 function crearNotificacionError(errorMsj) {
-    const existeErrorEl = document.querySelector('#errores .notificacion-error')
+    const existeErrorEl = document.querySelector('#erroresPop .notificacion-error')
     if(!existeErrorEl) {
         const notif = document.createElement('DIV');
         notif.classList.add('notificacion-error');    
