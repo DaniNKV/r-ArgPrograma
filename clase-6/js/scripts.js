@@ -146,7 +146,9 @@ function creaInputSueldo (indice) {
 
 
 // Calcular con las edades y salarios ingresados
-function calcularTodo (event) {
+function manejarErrores (event) {
+    limpiarErrores();
+
     const edades = obtenerEdadesIntegrantes(),
           salarios = obtenerSalariosIntegrantes();
 
