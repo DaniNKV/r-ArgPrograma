@@ -216,7 +216,8 @@ function imprimirErrorDOM(errorMsj, errorIdx) {
         $div = document.createElement('DIV'),
         $p = document.createElement('P');
 
-    $p.innerHTML = `${errorMsj} en los siguientes integrantes: <span class="error-span">${errorIdx}</span>`
+    $p.innerHTML = 
+    `${errorMsj} en los siguientes integrantes: <span class="error-span">${errorIdx}</span>`
 
     DOM.erroresDiv.appendChild($div);
     $div.appendChild($p);    
@@ -386,10 +387,10 @@ function validarSalario (numero) {
     const salario = Number(numero);
     if (salario < 0) {
         return 'El salario no puede ser negativo' 
-    }else if (salario == '' || NaN) {
+    }else if (salario == '' || salario == NaN) {
         return 'El salario debe ser un número'
     }else if (salario <= 1000) {
-        return 'El salario anual debe ser mayor que 1.000'
+        return 'El salario debe ser mayor que 1.000'
     }else {
         return ''
     }
