@@ -150,41 +150,60 @@ function calcularTodo (event) {
     const edades = obtenerEdadesIntegrantes(),
           salarios = obtenerSalariosIntegrantes();
 
-    const erroresEdadArr = manejarErroresEdad(edades);
-    const hayErrores = erroresEdadArr.length > 0;
+    const erroresEdad = agruparErrores(edades, 'edad');
+    const hayErroresEdad = erroresEdad.length > 0;
+    const erroresSalario = agruparErrores(salarios, 'salario');
+    const hayErroresSalario = erroresSalario.length > 0;
     
-    limpiarErrores();
-    
-    if (hayErrores) {
+    if(hayErroresEdad || hayErroresSalario) {
         ocultarResultados()
-        erroresEdadArr.forEach(error => imprimirErrorDOM(error.mensaje, error.index))
-    }else {
-        calcularEdades(edades);
-        mostrarResultados();
-
+        erroresEdad.forEach(error => imprimirErrorDOM(error.mensaje, error.index))
+        erroresSalario.forEach(error => imprimirErrorDOM(error.mensaje, error.index)) ? salarios.length > 0 : ''
+    } else {
+        calcularTodo(edades, salarios)
     }
+    console.log(erroresEdad, erroresSalario)
+    
+
     
 
     event.preventDefault();
 }
 
-function manejarErroresEdad(edades) {
+function calcularTodo(edades, salarios) {;
+    calcularEdades(edades);
+    if(salarios.length > 0) {
+        calcularSalarios(salarios);
+    }
+    
+    mostrarResultados();
+}
+function agruparErrores(array, campoParaValidar) {
     let errores = [];
 
-    edades.forEach((edad, idx) => {
-        const errorEdad = validarEdad(edad);
+    array.forEach((item, idx) => {
+        // Elegir qué campo se analiza
+        if(campoParaValidar === 'edad') {
+            error = validarEdad(item);
+        }else if (campoParaValidar === 'salario') {
+            error = validarSalario(item);
+        }
+        
+        if (error !== '') {
+            const // Formato del error
+                mensaje = error.msj,
+                tipo = error.tipo,
+                index = `${idx + 1}`;
 
-        if (errorEdad !== '') {
-            const mensaje = errorEdad.msj;
-            const tipo = errorEdad.tipo;
-            const index = `${idx + 1}`;
-            
             if (errores.length === 0) {
                 errores.push({ tipo, index, mensaje });
-            } else {
-                errores.forEach(error => {
-                    if(error.tipo === tipo) {
-                        error.index += `, ${index}`;
+            } 
+            else {
+                errores.forEach(errorActual => {
+                   // Si existe un error del mismo tipo, solo agrega el index
+                    if(errorActual.tipo === tipo) {
+                        errorActual.index += `, ${index}`;
+                    // Si no existe, lo crea
                     }else {
                         errores.push({ tipo, index, mensaje });
                     }
@@ -194,10 +213,9 @@ function manejarErroresEdad(edades) {
     });
     return errores;
 }
-/*          const mensaje = error.msj;
-            errores[error.type - 1].msj = mensaje;
-            errores[error.type - 1].index.push(`${idx + 1}`);
-   */ 
+
+
+
 function calcularEdades (edades) {
     mostrarEdad('promedio', calcularPromedio(edades));
     mostrarEdad('menor', calcularMenor(edades));
@@ -217,7 +235,7 @@ function imprimirErrorDOM(errorMsj, errorIdx) {
         $p = document.createElement('P');
 
     $p.innerHTML = 
-    `${errorMsj} en los siguientes integrantes: <span class="error-span">${errorIdx}</span>`
+    `${errorMsj} en los siguientes integrantes: #  <span class="error-span">${errorIdx}</span>`
 
     DOM.erroresDiv.appendChild($div);
     $div.appendChild($p);    
@@ -226,10 +244,55 @@ function imprimirErrorDOM(errorMsj, errorIdx) {
 
 
 
+
+// #########    Obtener datos ingresados por el usuario    ######### //
+function obtenerEdadesIntegrantes() {
+    const $integrantes = document.querySelectorAll('.integrante input.input');
+    const edades = [] ;
+     for(i=0 ; i < $integrantes.length ; i++) {
+        edades.push(Number($integrantes[i].value.trim()));
+    }
+    return edades;
+}
+
+function obtenerSalariosIntegrantes() {
+    const $salarios = document.querySelectorAll('.integrante .salario');
+    const salarios = [] ;
+
+    $salarios.forEach( (salario, idx) => {
+        const integranteTrabaja = DOM.preguntaTrabajo[idx].checked;
+        if(integranteTrabaja){
+            salarios.push(Number(salario.value))
+        }
+    });
+
+    return salarios;
+
+}
+
+
+
+// #########    Inyectar valores en el Análisis   ######### //
+
+function mostrarEdad(tipo, valor) {
+    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
+    document.querySelector(`#${tipo}-edad`).textContent = valor
+}
+function mostrarSalario(tipo, valor) {
+    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
+    document.querySelector(`#${tipo}-salario`).textContent = formatoDinero(valor)
+}
+
+function formatoDinero (numero) {
+    return numero.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+    
+
 // #########    Funciones de Reseteo    ######### //
 
 function resetear() {
     limpiarErrores();
+    borrarInputsAnteriores();
     borrarIntegrantesAnteriores();
     ocultarBotonCalculo();
     ocultarResultados();
@@ -253,50 +316,16 @@ function eliminaInputSueldo (indice) {
     
 }
 
-
-// #########    Obtener datos ingresados por el usuario    ######### //
-function obtenerEdadesIntegrantes() {
-    const $integrantes = document.querySelectorAll('.integrante input.input');
-    const edades = [] ;
-     for(i=0 ; i < $integrantes.length ; i++) {
-        edades.push(Number($integrantes[i].value.trim()));
-    }
-    return edades;
-}
-
-function obtenerSalariosIntegrantes() {
-    const $salarios = document.querySelectorAll('.integrante .salario');
-    const salarios = [] ;
-    $salarios.forEach(salario => {
-        const sueldo = Number(salario.value);
-        const salarioValidado = validarSalario(sueldo);
-       
-        if (salarioValidado == '') {
-            salarios.push(sueldo)
-        }
-    });
-    return salarios;
-
+function limpiarErrores() {
+    erroresEdad = [];
+    erroresSalario = [];
+    DOM.erroresDiv.innerHTML = '';
 }
 
 
-
-// #########    Inyectar valores en el Análisis   ######### //
-
-function mostrarEdad(tipo, valor) {
-    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
-    document.querySelector(`#${tipo}-edad`).textContent = valor
+function borrarInputsAnteriores() {
+    document.querySelectorAll('.strong').forEach(element => element.innerHTML = '')
 }
-function mostrarSalario(tipo, valor) {
-    //concateno # + el tipo + sufijo -edad / document.querySelector('#mayor-edad').textcontent
-    document.querySelector(`#${tipo}-salario`).textContent = formatoDinero(valor)
-}
-
-function formatoDinero (numero) {
-    return numero.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-}
-    
-
 
 
 // #########    Mostrar / Ocultar elementos del DOM    ######### //
@@ -337,10 +366,7 @@ function ocultarResultados() {
     DOM.analisisSalario.className = 'oculto';
 }
 
-function limpiarErrores() {
-    errores = [];
-    DOM.erroresDiv.innerHTML = '';
-}
+
 // #########    Validaciones  ######### //
 
 //Validaciones individuales
@@ -362,21 +388,25 @@ function validarCantidadFamiliares (cantidadFamiliares) {
 function validarEdad (numero) {
     const edadIntegrante = Number(numero)
     const esEntero = Number.isInteger(edadIntegrante)
+   
     if(edadIntegrante < 0 || edadIntegrante > 150) {
         return {
             msj: 'La edad no puede ser menor a 0 o mayor a 150',
             tipo: 1
         };
+   
     }else if (!esEntero) {
         return {
             msj: 'La edad no puede ser fraccionaria',
             tipo: 2
         };
+    
     }else if (edadIntegrante == ''){
         return {
             msj: 'Debe ingresar la edad numérica',
             tipo: 3 
         };
+   
     }else {
         return ''
     }
@@ -385,12 +415,25 @@ function validarEdad (numero) {
 
 function validarSalario (numero) {
     const salario = Number(numero);
+   
     if (salario < 0) {
-        return 'El salario no puede ser negativo' 
+        return {
+            msj: 'El salario no puede ser negativo',
+            tipo: 1
+        }; 
+    
     }else if (salario == '' || salario == NaN) {
-        return 'El salario debe ser un número'
+        return {
+            msj: 'El salario debe ser un número',
+            tipo: 2
+        };
+    
     }else if (salario <= 1000) {
-        return 'El salario debe ser mayor que 1.000'
+        return {
+            msj: 'El salario debe ser mayor que 1.000',
+            tipo: 3
+        };
+    
     }else {
         return ''
     }
@@ -424,7 +467,7 @@ function crearNotificacionError(errorMsj) {
 // #########    Event Listeners  ######### //
 DOM.siguientePasoBtn.onclick = segundoPaso;
 
-DOM.calcularBtn.onclick = calcularTodo;
+DOM.calcularBtn.onclick = manejarErrores;
 
 DOM.resetearBtn.onclick = resetear;
 
