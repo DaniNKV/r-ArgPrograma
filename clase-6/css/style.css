@@ -28,6 +28,7 @@ body {
     font-family: 'Lato', sans-serif;
     color: #fff;
     margin: 0;
+    overflow: hidden;
 }
 
 
@@ -150,8 +151,22 @@ button i {
     justify-content: center;
     gap: .5rem;
     flex-wrap: wrap;
+    transform: translateX(0);
+    animation: entradaIzquierda 0.3s forwards linear;
+    
 }
 
+
+@keyframes entradaIzquierda {
+    from {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
 .integrante .input {
     width: 5rem;
     margin-left: .5rem;
@@ -170,8 +185,16 @@ button i {
     width: 100%;
     text-align: center;
     margin-top: .3rem;
-    
-    
+    animation: entradaDerecha 0.3s forwards ease;    
+}
+
+@keyframes entradaDerecha {
+    from {
+        transform: translateX(1000px);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 #boton-calcular {
