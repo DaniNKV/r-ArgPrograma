@@ -11,14 +11,6 @@ let DOM = {
     giftImg : document.querySelector('.santa-gift')
 }
 
-// Comportamiento al azar
-const comportamiento = {
-  1: "muy bueno",
-  2: "bueno",
-  3: "malo"
-}
-
-
 
 // ######## VALIDACION FORMULARIO ######### //
 
@@ -109,14 +101,15 @@ function ocultaError (key) {
 
 function validarNombre (nombre) {
     if (nombre.length === 0) {
-      return ('El nombre debe tener más de un carácter')
+      return 'El nombre debe tener más de un carácter'
     }
     if (nombre.length >= 50) {
-      return ('El nombre debe tener menos de 50 carácteres')
+      return 'El nombre debe tener menos de 50 carácteres'
     }
     const contieneSoloLetras = /^[a-z]+$/i.test(nombre);
     if (contieneSoloLetras === false) {
-      return ('El nombre debe contener solo letras');}
+      return 'El nombre debe contener solo letras'
+    }
     else {
       return "";
     }

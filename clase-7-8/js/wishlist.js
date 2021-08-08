@@ -1,4 +1,11 @@
-
+// Comportamiento al azar
+const comportamiento = {
+    muyBueno: "muy bueno",
+    bueno: "bueno",
+    malo: "malo"
+  }
+  
+  
 function mostrarDeseos () {
     let $wishList = document.querySelector('#wish-list');
     
@@ -45,13 +52,13 @@ function mostrarComportamientoRandom() {
 // Inyectar datos del regalo en el HTML
 
 function mostrarRegalo() {
-  if (DOM.actitud.innerText === 'malo') {
+  if (DOM.actitud.innerText === comportamiento.malo) {
     DOM.santaGift.innerText = 'No tienes regalo este año :(';
     const $p = document.querySelector('.gift-section .frase');
     $p.style.display = 'none';
 
   }else {
-    const nroRandom = CreaNumeroRandom(localStorageIndex-1);
+    const nroRandom = CrearNumeroRandom(localStorageIndex-1);
     const regalo = JSON.parse(localStorage.getItem('user'+(nroRandom)));
     const regaloElegido = regalo.descripcion
   
@@ -64,7 +71,7 @@ function mostrarRegalo() {
 
 
 // ######## Funciones Auxiliares ######### //
-function CreaNumeroRandom (limite) {
+function crearNumeroRandom (limite) {
   //Crea un numero random entero del 0 al limite
   numeroRandom = Math.floor(Math.random() * limite) + 1;
 
