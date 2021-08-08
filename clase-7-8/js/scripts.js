@@ -108,14 +108,13 @@ function ocultaError (key) {
 // ######## VALIDACIONES INDIVIDUALES ######### //
 
 function validarNombre (nombre) {
-    const contieneSoloLetras = /^[a-z]+$/i.test(nombre);
-    
     if (nombre.length === 0) {
       return ('El nombre debe tener más de un carácter')
     }
     if (nombre.length >= 50) {
       return ('El nombre debe tener menos de 50 carácteres')
     }
+    const contieneSoloLetras = /^[a-z]+$/i.test(nombre);
     if (contieneSoloLetras === false) {
       return ('El nombre debe contener solo letras');}
     else {
