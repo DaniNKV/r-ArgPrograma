@@ -4,5 +4,5 @@
 
 <h2>Screenshots</h2>
 
-![Screenshot](clase-6/edades-y-salarios.jpg)
-![Screenshot](clase-6/edades-y-salarios2.jpg)
+![Screenshot](edades-y-salarios.jpg)
+![Screenshot](edades-y-salarios2.jpg)
