@@ -15,7 +15,7 @@ const NOMBRE_USUARIO = prompt ("Escriba su nombre" || "" ).toLowerCase() ;
 
 if (MI_NOMBRE == NOMBRE_USUARIO) {
     alert(`Hola, Tocayo! Yo también me llamo ${NOMBRE_USUARIO}`);
-}else if (nombre_Usuario == "jorge") {
+}else if (NOMBRE_USUARIO == "jorge") {
     alert(`Hey! Mi tío se llama ${NOMBRE_USUARIO}`);
 }else if (NOMBRE_USUARIO.trim().length === 0) {
     alert(`Hola ${NOMBRE_USUARIO}`);
