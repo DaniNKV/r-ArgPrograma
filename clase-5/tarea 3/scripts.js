@@ -34,12 +34,14 @@ $botonCalcular.onclick = function(e) {
     const horas = parseInt(document.querySelector('#horas').value);
     const minutos = parseInt(document.querySelector('#minutos').value);
     const segundos = parseInt(document.querySelector('#segundos').value);
-    
+    const elementoResultado = document.querySelector('#duracion-total')
+    const resultado = document.querySelector('#resultado')
+
     calcularTiempoTotal(horas,minutos,segundos);
     calcularResultado(horasParciales,minutosParciales,segundosParciales);
 
-    document.querySelector('#duracion-total').innerText = `La duración total del curso es de: ${horasResultado} horas, ${minutosResultado} minutos y ${segundosResultado} segundos`;
-    
+    resultado.innerText = `${horasResultado} horas, ${minutosResultado} minutos y ${segundosResultado} segundos`;
+    elementoResultado.classList.remove('invisible')
 
     console.log(horasResultado,minutosResultado,segundosResultado) ;
 

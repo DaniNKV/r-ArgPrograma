@@ -4,33 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>tarea 3</title>
 </head>
-<body>
 
-<h1>Calculadora de Duración total</h1>
+<style>
+    .container {
+        max-width: 728px;
+    }
+</style>
 
-<form>
-    <h2>Ingrese la duración del video</h2>
-    <label for="hours">Horas</label>
-    <input 
-        type = "number"
-        id = "horas">
+<body> 
+
+
+<form class="container">
+    <h1 class="text-center">Calculadora de Duración total</h1>
+
+    <h2 class="text-center">Ingrese la duración del video</h2>
+    <div class="form-group">
+        <label for="hours">Horas</label>
+        <input
+            class="form-control"
+            type = "number"
+            id = "horas">
         
-    <label for="minutes">Minutos</label>
-    <input
-        id = "minutos" 
-        type = "number">
-    <label for="seconds">Segundos</label>
-    <input 
-        id = "segundos"
-        type = "number">
+    </div>
+    <div class="form-group">
+        <label for="minutes">Minutos</label>
+        <input
+            class="form-control"
+            id = "minutos"
+            type = "number">
+    </div>
+    <div class="form-group">
+        <label for="seconds">Segundos</label>
+        <input
+            class="form-control"
+            id = "segundos"
+            type = "number">
         
+    </div>
     <button 
+        class="d-block mb-4 btn btn-primary"
         type="submit"
-        id = "calcular">Submit</button>
+        id = "calcular">
+        
+        Submit
 
-    <strong id="duracion-total" class="strong"></strong>
+    </button>
+
+    <strong id="duracion-total"class="invisible">La duración del curso es: <span class="badge badge-secondary" id="resultado"></span></strong>
 </form>
 
 
@@ -47,26 +71,3 @@
 
 
 
-
-<style>
-    h1,h2 {
-        text-align: center;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 10px;
-        width: 480px;
-    }
-    label {
-        padding: 5px;;
-    }
-    button {
-        margin-top: 10px;
-    }
-    .strong {
-        padding-top: 20px;
-        font-size: 20px
-    }
-</style>
