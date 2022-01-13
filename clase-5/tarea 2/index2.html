@@ -5,52 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarea 2 Clase 5</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <style>
-    h1 {
-        text-align: center;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 480px;
-        margin: 0 auto 0 auto;  
-    }
-    label {
-        padding: 0.5rem 0
-    }
-    .button {
-        margin: 10px 0;
-        padding: 20px;
-    }
+
+.container {
+    max-width: 728px;
+}
 </style>
 <body>
 
-    <form id="form">
-        <h1 id="title"></h1>
-        <label for="firstName">Primer Nombre</label>
-        <input 
-            class="input"
-            type="text"
-            id="primer-nombre">
+    <form id="form" class="container mt-5">
+        <h1 id="title" class="text-center"></h1>
+        <div class="form-row pb-3">
+            <div class="col">
+                <label for="firstName">Primer Nombre</label>
+                <input
+                    class="input form-control"
+                    type="text"
+                    id="primer-nombre">
+            </div>
+            <div class="col">
+                <label for="secondName">Segundo Nombre</label>
+                <input
+                    class="input form-control"
+                    type="text"
+                    id="segundo-nombre">
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Apellido</label>
+            <input
+                class=" input form-control"
+                type="text"
+                id="apellido">
+        </div>
+        <div class="form-group">
+            <label for="Age">Edad</label>
+            <input
+                class="input form-control"
+                type="age"
+                from="0" to="99">
             
-        <label for="secondName">Segundo Nombre</label>
-        <input 
-            class="input"    
-            type="text"
-            id="segundo-nombre">
-        <label for="LastName">Apellido</label>
-        <input 
-            class="input"
-            type="text"
-            id="apellido">
-        <label for="Age">Edad</label>
-        <input 
-            class="input"
-            type="age" 
-            from="0" to="99">
-        
-        <input class="button" type="submit" id="enviar">
+        </div>
+        <input class="btn btn-primary mb-5" type="submit" id="enviar">
         
     </form>
     

@@ -6,7 +6,7 @@
     const salarioAnual = Number(document.querySelector('#salario-anual').value)
     const salarioMensual = calcularSalarioMensual(salarioAnual);
     console.log(salarioMensual)
-    document.querySelector('#salario-mensual').innerText = salarioMensual;
+    document.getElementById('salario-mensual').value = salarioMensual;
     return false;
   }
 
