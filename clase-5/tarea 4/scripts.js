@@ -14,8 +14,14 @@ $botonAgregar.onclick = function(e) {
     const $numero = document.querySelector('#numero');
     const ul = document.querySelector('#lista');
     const li = document.createElement('li')
+    if ($numero.value.trim() === '') {
+        e.preventDefault();
+        return
+    }
     ul.appendChild(li);
+    li.classList.add('list-group-item')
     li.textContent = $numero.value;
+
     document.getElementById("agregarNumeros").reset();
     return false;
     

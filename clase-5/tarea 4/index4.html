@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Tarea 4
     </title>
 </head>
-<body>
+<body class="container mt-5">
     <div class="listado">
-        <form id="agregarNumeros">
-            <label>Ingrese un numero</label>
-            <input type="number" id="numero">
-            <button id="botonAgregar">Agregar Numero</button>
+        <form id="agregarNumeros" class="" >
+            <div class="form-group">
+                <label >Ingrese un numero</label>
+                <input type="number" id="numero" class="form-control">
+                <button id="botonAgregar" class="mt-2 w-100 btn btn-secondary">Agregar Numero</button>
+                <button id="botonCalcular" class="w-100 mt-3 btn btn-primary ">Calcular</button>
+
+            </div>
+
+
         </form>
-        <ul id="lista"></ul>
+
         
-        <button id="botonCalcular">Calcular</button>
+        <ul id="lista" class="list-group mt-3"></ul>
+        
     </div>
     
     <div class="resultados">
 
-        <p>El promedio es:<em id="promedio"></em></p>
-        <p>El número más grande es:<em id="masGrande"></em></p>
-        <p>El número más chico es:<em id="masPequeño"></em></p>
-        <p>El número que más se repite es: <em id="masFrecuente"></em></p>
+        <p>El promedio es:<em id="promedio" class="badge badge-secondary"></em></p>
+        <p>El número más grande es:<em id="masGrande" class="badge badge-secondary"></em></p>
+        <p>El número más chico es:<em id="masPequeño" class="badge badge-secondary"></em></p>
+        <p>El número que más se repite es: <em id="masFrecuente" class="badge badge-secondary"></em></p>
     </div>
     
     <script src="scripts.js"></script>
@@ -33,6 +42,9 @@
 
 
 <style>
+    .container {
+        max-width: 728px;
+    }
     em {
         margin-left: 5px;
         font-weight: bold;

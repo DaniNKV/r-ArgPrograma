@@ -43,7 +43,6 @@ $botonCalcular.onclick = function(e) {
     resultado.innerText = `${horasResultado} horas, ${minutosResultado} minutos y ${segundosResultado} segundos`;
     elementoResultado.classList.remove('invisible')
 
-    console.log(horasResultado,minutosResultado,segundosResultado) ;
 
     return false;
 
