@@ -4,7 +4,8 @@
   "description": "Calculadora edades-salarios",
   "main": "tarea-clase-6.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "cypress:open": "test run"
   },
   "author": "",
   "license": "ISC",
