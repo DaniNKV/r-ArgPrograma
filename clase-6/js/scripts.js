@@ -473,5 +473,9 @@ DOM.calcularBtn.onclick = manejarErrores;
 
 DOM.resetearBtn.onclick = resetear;
 
-
-
+document.querySelectorAll('.input').forEach($integrante => {
+    console.log($integrante)
+    $integrante.addEventListener('keypress', (e) => {
+        e.key === 13 ? '' : ''
+    })
+})
