@@ -17,9 +17,9 @@ describe('Test', () => {
     })
   })
 
-	describe('Genera inputs correctamente', () => {
-		it('Crea cantidad correcta de miembros', () => {
-      cy.get('#integrantes').children().should('have.length', 2)
+  describe('Genera inputs correctamente', () => {
+    it('Crea cantidad correcta de miembros', () => {
+    cy.get('#integrantes').children().should('have.length', 2)
 
     })
 		it('Funciona input para edad', () => {
